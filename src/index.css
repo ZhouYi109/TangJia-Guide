@@ -1,0 +1,107 @@
+:root {
+  /* ==================
+     唐家古镇色彩规范 
+     ================== */
+  
+  /* 主背景色 (Background): 莹白 / 糯米白 */
+  --color-bg-primary: #F7F7F5;
+  --color-bg-secondary: #EBEBE9;
+
+  /* 主调色 (Primary): 暖砂岩灰与水磨青灰 */
+  --color-primary-warm: #D5CFC4;
+  --color-primary-cool: #8A9196;
+
+  /* 线框与文字色 (Text & Borders): 深炭黑与青砖黛灰 */
+  --color-text-primary: #2C2C2C;
+  --color-text-secondary: #4A4F54;
+  --color-border: #C8C8C8;
+
+  /* 功能点缀色 (Accent): 宝石蓝 / 孔雀绿 */
+  --color-accent-blue: #1A5B7F;
+  --color-accent-green: #1E625A;
+  
+  /* ==================
+     其他变量 
+     ================== */
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'PingFang SC', 'Microsoft YaHei';
+  --font-family-serif: 'Songti SC', 'STSong', serif;
+  --border-radius-lg: 16px;
+  --border-radius-md: 12px;
+  --border-radius-sm: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 玻璃拟物效果基础类 (Glassmorphism) */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--color-bg-primary);
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+  overflow-x: hidden;
+}
+
+.page-content {
+  padding: 20px 20px 100px; /* 留出 bottom nav 空间 */
+}
+
+/* ==================
+   动画效果
+   ================== */
+@keyframes scanAnimation {
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
