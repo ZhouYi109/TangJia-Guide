@@ -10,15 +10,18 @@ import { calculateBearing, getRelativeRotation } from '../utils/geoMath';
 export default function Home() {
   const navigate = useNavigate();
   const [mapOpen, setMapOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('attraction');
   
   const { position, isMocking, setIsMocking } = useGeolocation();
   const { heading, error: compassError, permissionGranted, requestPermission } = useCompass();
 
   // 根据当前位置计算距离，并对节点进行排序
   const sortedNodes = useMemo(() => {
-    if (!position) return nodes; 
+    let filtered = nodes.filter(n => n.category === activeCategory);
     
-    return [...nodes].map(node => {
+    if (!position) return filtered; 
+    
+    return filtered.map(node => {
       // 1. 计算距离
       const dist = getDistance(
         position.latitude,
@@ -120,9 +123,23 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 动态排序的景点列表 */}
+        {/* 动态排序的分类列表 */}
         <section style={styles.routes}>
-          <h3 style={styles.sectionTitle}>附近向导点位 ({sortedNodes.length})</h3>
+          <div style={styles.tabsContainer}>
+            <button 
+              style={activeCategory === 'attraction' ? styles.tabActive : styles.tabInactive}
+              onClick={() => setActiveCategory('attraction')}
+            >🏞️ 景点</button>
+            <button 
+              style={activeCategory === 'dining' ? styles.tabActive : styles.tabInactive}
+              onClick={() => setActiveCategory('dining')}
+            >🍜 餐饮</button>
+            <button 
+              style={activeCategory === 'restroom' ? styles.tabActive : styles.tabInactive}
+              onClick={() => setActiveCategory('restroom')}
+            >🚻 卫生间</button>
+          </div>
+
           <div style={styles.nodeList}>
             {sortedNodes.map((node) => (
               <div 
@@ -132,7 +149,12 @@ export default function Home() {
                 onClick={() => navigate(`/node/${node.id}`)}
               >
                 <div style={styles.nodeInfo}>
-                  <h4 style={styles.nodeName}>{node.name}</h4>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                    <h4 style={styles.nodeName}>{node.name}</h4>
+                    {node.rating && (
+                      <span style={styles.ratingBadge}>⭐ {node.rating}分</span>
+                    )}
+                  </div>
                   <div style={styles.nodeTags}>
                     {node.tags.slice(0, 2).map(tag => (
                       <span key={tag} style={styles.tag}>{tag}</span>
@@ -313,12 +335,36 @@ const styles = {
   routes: {
     marginTop: '10px',
   },
-  sectionTitle: {
-    fontSize: '16px',
+  tabsContainer: {
+    display: 'flex',
+    backgroundColor: 'rgba(255,255,255,0.6)',
+    borderRadius: '12px',
+    padding: '4px',
     marginBottom: '16px',
-    color: 'var(--color-text-primary)',
-    borderLeft: '4px solid var(--color-accent-blue)',
-    paddingLeft: '8px',
+    border: '1px solid rgba(255,255,255,0.8)',
+  },
+  tabActive: {
+    flex: 1,
+    padding: '8px',
+    border: 'none',
+    backgroundColor: '#fff',
+    color: 'var(--color-primary-cool)',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+  },
+  tabInactive: {
+    flex: 1,
+    padding: '8px',
+    border: 'none',
+    backgroundColor: 'transparent',
+    color: 'var(--color-text-secondary)',
+    fontSize: '14px',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
   },
   nodeList: {
     display: 'flex',
@@ -339,8 +385,17 @@ const styles = {
   },
   nodeName: {
     fontSize: '16px',
-    margin: '0 0 6px 0',
+    margin: '0',
     color: 'var(--color-text-primary)',
+  },
+  ratingBadge: {
+    backgroundColor: '#FFF8E1',
+    color: '#FF8F00',
+    fontSize: '11px',
+    padding: '2px 6px',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    border: '1px solid #FFE082'
   },
   nodeTags: {
     display: 'flex',

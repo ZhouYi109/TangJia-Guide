@@ -1,15 +1,15 @@
 export const nodes = [
   {
-    id: 'tangjia-sanmiao',
+    id: 'tangjia-sanmiao', category: 'attraction',
     name: '唐家三庙',
     tags: ['宗族礼制', '清代建筑', '灰塑纹样'],
     description: '唐家三庙由圣堂庙、文武帝庙和金花庙组成，是唐家湾古镇的信仰中心。这里的建筑立面保留了大量的传统灰塑与木雕细节。',
     feature: '屋脊上的灰塑瑞兽呈现出高级的青砖黛灰色调，是岭南建筑中极具代表性的现象学视觉元素。',
     coords: { latitude: 22.35824, longitude: 113.59739 },
-    mapImage: '/node_map.png' // 具体的导视图
+    mapImage: '/node_map.png'
   },
   {
-    id: 'gongleyuan',
+    id: 'gongleyuan', category: 'attraction',
     name: '共乐园 (满洲窗老宅)',
     tags: ['中西合璧', '民国风情', '铁艺花窗'],
     description: '原为唐绍仪的私人花园，其建筑风格体现了晚清民国时期唐家湾作为“买办故里”的开放包容。',
@@ -18,7 +18,7 @@ export const nodes = [
     mapImage: '/node_map.png'
   },
   {
-    id: 'haokeqiang',
+    id: 'haokeqiang', category: 'attraction',
     name: '蚝壳墙巷道',
     tags: ['天然肌理', '生态美学', '光影变化'],
     description: '利用成千上万个天然蚝壳呈45度角交错垒砌而成，不仅防潮，更在阳光下呈现出波浪起伏的鱼鳞状阴影。',
@@ -27,7 +27,7 @@ export const nodes = [
     mapImage: '/node_map.png'
   },
   {
-    id: 'ruizhi-ci',
+    id: 'ruizhi-ci', category: 'attraction',
     name: '瑞芝唐公祠',
     tags: ['宗族礼制', '木雕工艺'],
     description: '唐家湾现存规模宏大的清代祠堂，展现了古镇深厚的宗族文化底蕴。',
@@ -36,7 +36,7 @@ export const nodes = [
     mapImage: '/node_map.png'
   },
   {
-    id: 'wangci-shanfang',
+    id: 'wangci-shanfang', category: 'attraction',
     name: '望慈山房',
     tags: ['私家园林', '静谧空间'],
     description: '隐藏在古镇深处的一处清幽别院，适合静思与游赏。',
@@ -45,7 +45,7 @@ export const nodes = [
     mapImage: '/node_map.png'
   },
   {
-    id: 'shanfang-lu',
+    id: 'shanfang-lu', category: 'attraction',
     name: '山房路',
     tags: ['古镇街巷', '生活气息'],
     description: '唐家古镇的主轴线之一，两侧林立着百年老屋与现代文创小店。',
@@ -54,7 +54,7 @@ export const nodes = [
     mapImage: '/node_map.png'
   },
   {
-    id: 'tangshaoyi-guju',
+    id: 'tangshaoyi-guju', category: 'attraction',
     name: '唐绍仪故居',
     tags: ['历史名人', '民初洋楼'],
     description: '民国首任内阁总理唐绍仪的故居，见证了中国近代的风云变幻。',
@@ -63,14 +63,27 @@ export const nodes = [
     mapImage: '/node_map.png'
   },
   {
-    id: 'chaguo-feiyi',
+    id: 'chaguo-feiyi', category: 'attraction',
     name: '茶果非遗摊位',
     tags: ['非遗美食', '民俗体验'],
     description: '在这里可以品尝和体验制作唐家湾传统的非遗小吃“茶果”。',
     feature: '色彩丰富的民间糕点，也是极佳的视觉素材。',
     coords: { latitude: 22.35850, longitude: 113.59680 },
     mapImage: '/node_map.png'
-  }
+  },
+
+  // 餐饮美食节点
+  { id: 'd1', category: 'dining', name: '三号私房菜', tags: ['唐家菜', '老字号'], description: '招牌唐家湾特色菜，环境优雅。', rating: 4.8, coords: { latitude: 22.3615, longitude: 113.5960 }, mapImage: '/node_map.png' },
+  { id: 'd2', category: 'dining', name: '共乐吧', tags: ['下午茶', '西餐'], description: '共乐园旁的浪漫休闲吧。', rating: 4.6, coords: { latitude: 22.3635, longitude: 113.5945 }, mapImage: '/node_map.png' },
+  { id: 'd3', category: 'dining', name: '牛记冬瓜店', tags: ['老火靓汤', '必吃榜'], description: '原盅冬瓜盅，清热解暑。', rating: 4.9, coords: { latitude: 22.3595, longitude: 113.5950 }, mapImage: '/node_map.png' },
+  { id: 'd4', category: 'dining', name: '明达农庄', tags: ['农家菜', '量大实惠'], description: '地道农家风味，特色走地鸡。', rating: 4.7, coords: { latitude: 22.3575, longitude: 113.5930 }, mapImage: '/node_map.png' },
+  { id: 'd5', category: 'dining', name: '钟姐螺蛳粉', tags: ['特色小吃', '排队王'], description: '地道柳州风味，隐藏在古镇的网红店。', rating: 4.8, coords: { latitude: 22.3580, longitude: 113.5980 }, mapImage: '/node_map.png' },
+  { id: 'd6', category: 'dining', name: '唐家三公子火锅食吧', tags: ['夜宵首选', '火锅'], description: '朋友聚餐首选，新鲜食材。', rating: 4.5, coords: { latitude: 22.3565, longitude: 113.5975 }, mapImage: '/node_map.png' },
+
+  // 公共卫生间节点 (依据实际大型停车场及游客中心映射)
+  { id: 'r1', category: 'restroom', name: '公共卫生间 (共乐园1号停车场)', tags: ['免费开放', '无障碍设施'], description: '位于共乐园地上停车场入口旁。', coords: { latitude: 22.3650, longitude: 113.5930 }, mapImage: '/node_map.png' },
+  { id: 'r2', category: 'restroom', name: '公共卫生间 (山房路文化广场)', tags: ['免费开放', '游客中心旁'], description: '位于古镇核心文化广场游客休息点。', coords: { latitude: 22.3605, longitude: 113.5970 }, mapImage: '/node_map.png' },
+  { id: 'r3', category: 'restroom', name: '公共卫生间 (唐中路停车场)', tags: ['免费开放', '停车场旁'], description: '位于唐中路大型停车场边缘。', coords: { latitude: 22.3560, longitude: 113.5960 }, mapImage: '/node_map.png' },
 ];
 
 // 全局地图的虚拟边界极点 (用于换算定位在图片上的相对位置)
