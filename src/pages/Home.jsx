@@ -1,35 +1,15 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
-import L from 'leaflet';
 import BottomNav from '../components/BottomNav';
+import MapLightbox from '../components/MapLightbox';
 import useGeolocation, { getDistance } from '../hooks/useGeolocation';
 import useCompass from '../hooks/useCompass';
-import { nodes } from '../data/nodes';
+import { nodes, getMapPositionPercent } from '../data/nodes';
 import { calculateBearing, getRelativeRotation } from '../utils/geoMath';
-
-// 修复 Leaflet 默认图标路径问题
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
-
-// 地图控制器组件：用于在位置更新时平滑移动地图中心
-function MapController({ position }) {
-  const map = useMap();
-  useEffect(() => {
-    if (position) {
-      // 这里的阈值可以控制是否每次都居中。为了让用户可以自由拖拽，只在初次定位时居中比较好
-      // 或者提供一个"回到我的位置"按钮。目前保持默认不强制飞跃，以免打断用户浏览
-    }
-  }, [position, map]);
-  return null;
-}
 
 export default function Home() {
   const navigate = useNavigate();
+  const [mapOpen, setMapOpen] = useState(false);
   
   const { position, isMocking, setIsMocking } = useGeolocation();
   const { heading, error: compassError, permissionGranted, requestPermission } = useCompass();
@@ -39,6 +19,7 @@ export default function Home() {
     if (!position) return nodes; 
     
     return [...nodes].map(node => {
+      // 1. 计算距离
       const dist = getDistance(
         position.latitude,
         position.longitude,
@@ -46,6 +27,7 @@ export default function Home() {
         node.coords.longitude
       );
       
+      // 2. 计算绝对方位角
       const bearing = calculateBearing(
         position.latitude,
         position.longitude,
@@ -53,105 +35,57 @@ export default function Home() {
         node.coords.longitude
       );
 
+      // 3. 计算 UI 上的相对旋转角度（手机朝向 vs 目标方位）
       const rotation = getRelativeRotation(heading, bearing);
 
       return { ...node, distance: dist, bearing, rotation };
     }).sort((a, b) => a.distance - b.distance);
   }, [position, heading]);
 
+  // 计算当前用户在手绘地图上的投影百分比位置
+  const mapPercent = position ? getMapPositionPercent(position.latitude, position.longitude) : null;
 
-  // 创建自定义景点图标
-  const createNodeIcon = (name) => {
-    return L.divIcon({
-      className: 'custom-node-marker',
-      html: `<div class="node-marker-pin"></div><div class="node-marker-label">${name}</div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10], // 锚点在图标正中心附近
-    });
+  const renderUserMarker = () => {
+    if (!mapPercent) return null;
+    return (
+      <div 
+        style={{
+          ...styles.userMarkerWrapper,
+          left: `${mapPercent.x}%`,
+          top: `${mapPercent.y}%`,
+        }}
+      >
+        <div style={styles.userMarkerPulse}></div>
+        <div style={styles.userMarkerCore}></div>
+        {heading !== null && (
+          <div style={{
+            ...styles.mapCompassArrow,
+            transform: `translate(-50%, -100%) rotate(${heading}deg)`,
+            transformOrigin: 'bottom center'
+          }}></div>
+        )}
+        <div style={styles.userMarkerLabel}>您在这里</div>
+      </div>
+    );
   };
-
-  // 创建自定义用户位置图标（附带指南针箭头）
-  const createUserIcon = (heading) => {
-    const transformStyle = heading !== null 
-      ? `transform: translate(-50%, -100%) rotate(${heading}deg);` 
-      : 'display: none;';
-      
-    return L.divIcon({
-      className: 'custom-user-marker',
-      html: `
-        <div class="user-marker-pulse"></div>
-        <div class="user-marker-core"></div>
-        <div class="map-compass-arrow" style="${transformStyle}"></div>
-        <div class="user-marker-label-map">您在这里</div>
-      `,
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-    });
-  };
-
-  // 唐家湾镇大致中心点
-  const defaultCenter = [22.36100, 113.59600];
 
   return (
     <>
       <BottomNav />
       <div className="page-content" style={{ paddingTop: 0, paddingBottom: '100px' }}>
         
-        {/* 真实的交互式地图面板 */}
+        {/* 全局手绘地图导视图 */}
         <section style={styles.mapSection}>
-          <div style={styles.mapContainer}>
-            <MapContainer 
-              center={defaultCenter} 
-              zoom={16} 
-              style={{ width: '100%', height: '100%', zIndex: 1 }}
-              zoomControl={false}
-              attributionControl={false}
-            >
-              <MapController position={position} />
-              
-              {/* 高德地图底图瓦片 - 带有丰富真实的地理POI (餐厅、道路等) */}
-              <TileLayer
-                url="https://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=2&style=8&x={x}&y={y}&z={z}"
-                maxNativeZoom={18}
-                maxZoom={20}
-              />
-              
-              {/* 渲染8个核心景点 */}
-              {nodes.map(node => (
-                <Marker 
-                  key={node.id} 
-                  position={[node.coords.latitude, node.coords.longitude]}
-                  icon={createNodeIcon(node.name)}
-                  eventHandlers={{
-                    click: () => navigate(`/node/${node.id}`),
-                  }}
-                />
-              ))}
-
-              {/* 渲染用户当前位置 */}
-              {position && (
-                <Marker 
-                  position={[position.latitude, position.longitude]}
-                  icon={createUserIcon(heading)}
-                  zIndexOffset={1000} // 确保用户图标在最上层
-                />
-              )}
-            </MapContainer>
-            
-            {/* 定制化视觉叠加层：边缘暗角融合与四角传统纹理水印 */}
-            <div style={styles.mapVignette}></div>
-            <div style={styles.cornerTopLeft}></div>
-            <div style={styles.cornerTopRight}></div>
-            <div style={styles.cornerBottomLeft}></div>
-            <div style={styles.cornerBottomRight}></div>
-
-            <div style={styles.expandHint}>双指缩放查看周边真实店面与街道</div>
+          <div style={styles.inlineMapContainer} onClick={() => setMapOpen(true)}>
+            <img src="/global_map.png" alt="全局地图" style={styles.globalMap} />
+            {renderUserMarker()}
+            <div style={styles.expandHint}>点击全屏查看向导地图</div>
           </div>
           
           <div style={styles.mapTextContent}>
             <h2 style={styles.subtitle}>唐家古镇导览系统</h2>
             <p style={styles.description}>
-              已接入高德真实地理引擎。点击下方按钮激活罗盘，系统将根据您的手机朝向，为您实时指引每个景点的方向。
+              实时定位系统已开启。点击下方按钮激活罗盘，系统将根据您的手机朝向，为您实时指引每个景点的方向。
             </p>
           </div>
         </section>
@@ -233,6 +167,15 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      <MapLightbox 
+        isOpen={mapOpen} 
+        onClose={() => setMapOpen(false)} 
+        imageSrc="/global_map.png"
+      >
+        {/* 全屏模式下，手绘图被放大，定位点随之缩放跟随 */}
+        {renderUserMarker()}
+      </MapLightbox>
     </>
   );
 }
@@ -243,65 +186,17 @@ const styles = {
     backgroundColor: '#fff',
     borderBottom: '1px solid var(--color-border)',
   },
-  mapContainer: {
+  inlineMapContainer: {
     position: 'relative',
     width: '100%',
-    height: '300px', // 设定一个固定的高度，方便拖拽交互
+    cursor: 'pointer',
     overflow: 'hidden',
   },
-  mapVignette: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0, bottom: 0,
-    boxShadow: 'inset 0 0 60px rgba(100, 70, 40, 0.4)',
-    pointerEvents: 'none',
-    zIndex: 900,
-  },
-  cornerTopLeft: {
-    position: 'absolute',
-    top: '-20px', left: '-20px',
-    width: '140px', height: '140px',
-    backgroundImage: 'url(/haokeqiang_pattern.png)',
-    backgroundSize: 'contain',
-    opacity: 0.25,
-    mixBlendMode: 'multiply',
-    pointerEvents: 'none',
-    zIndex: 900,
-  },
-  cornerTopRight: {
-    position: 'absolute',
-    top: '-20px', right: '-20px',
-    width: '140px', height: '140px',
-    backgroundImage: 'url(/gongleyuan_pattern.png)',
-    backgroundSize: 'contain',
-    opacity: 0.25,
-    mixBlendMode: 'multiply',
-    pointerEvents: 'none',
-    zIndex: 900,
-    transform: 'scaleX(-1)',
-  },
-  cornerBottomLeft: {
-    position: 'absolute',
-    bottom: '-20px', left: '-20px',
-    width: '140px', height: '140px',
-    backgroundImage: 'url(/tangjia_sanmiao_pattern.png)',
-    backgroundSize: 'contain',
-    opacity: 0.25,
-    mixBlendMode: 'multiply',
-    pointerEvents: 'none',
-    zIndex: 900,
-    transform: 'scaleY(-1)', 
-  },
-  cornerBottomRight: {
-    position: 'absolute',
-    bottom: '-20px', right: '-20px',
-    width: '140px', height: '140px',
-    backgroundImage: 'url(/haokeqiang_pattern.png)',
-    backgroundSize: 'contain',
-    opacity: 0.25,
-    mixBlendMode: 'multiply',
-    pointerEvents: 'none',
-    zIndex: 900,
-    transform: 'scale(-1, -1)', 
+  globalMap: {
+    width: '100%',
+    height: '240px',
+    objectFit: 'cover',
+    display: 'block',
   },
   expandHint: {
     position: 'absolute',
@@ -314,7 +209,58 @@ const styles = {
     borderRadius: '12px',
     backdropFilter: 'blur(4px)',
     pointerEvents: 'none',
-    zIndex: 1000,
+  },
+  userMarkerWrapper: {
+    position: 'absolute',
+    transform: 'translate(-50%, -50%)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    pointerEvents: 'none',
+  },
+  userMarkerPulse: {
+    position: 'absolute',
+    width: '32px',
+    height: '32px',
+    backgroundColor: 'rgba(239, 83, 80, 0.4)',
+    borderRadius: '50%',
+    animation: 'pulse 2s infinite',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+  userMarkerCore: {
+    width: '12px',
+    height: '12px',
+    backgroundColor: '#EF5350',
+    border: '2px solid #fff',
+    borderRadius: '50%',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+    position: 'relative',
+    zIndex: 2,
+  },
+  mapCompassArrow: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '0',
+    height: '0',
+    borderLeft: '4px solid transparent',
+    borderRight: '4px solid transparent',
+    borderBottom: '12px solid rgba(239, 83, 80, 0.8)',
+    transformOrigin: 'bottom center',
+    zIndex: 3,
+  },
+  userMarkerLabel: {
+    marginTop: '6px',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    color: '#D32F2F',
+    fontSize: '10px',
+    padding: '2px 6px',
+    borderRadius: '8px',
+    fontWeight: 'bold',
+    whiteSpace: 'nowrap',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
   },
   mapTextContent: {
     padding: '16px 20px',
