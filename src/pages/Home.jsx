@@ -112,7 +112,7 @@ export default function Home() {
               {/* 高德地图底图瓦片 - 带有丰富真实的地理POI (餐厅、道路等) */}
               <TileLayer
                 url="https://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=2&style=8&x={x}&y={y}&z={z}"
-                detectRetina={true}
+                maxNativeZoom={18}
                 maxZoom={20}
               />
               
