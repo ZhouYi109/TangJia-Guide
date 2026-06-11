@@ -136,6 +136,13 @@ export default function Home() {
               )}
             </MapContainer>
             
+            {/* 定制化视觉叠加层：边缘暗角融合与四角传统纹理水印 */}
+            <div style={styles.mapVignette}></div>
+            <div style={styles.cornerTopLeft}></div>
+            <div style={styles.cornerTopRight}></div>
+            <div style={styles.cornerBottomLeft}></div>
+            <div style={styles.cornerBottomRight}></div>
+
             <div style={styles.expandHint}>双指缩放查看周边真实店面与街道</div>
           </div>
           
@@ -239,6 +246,60 @@ const styles = {
     width: '100%',
     height: '300px', // 设定一个固定的高度，方便拖拽交互
     overflow: 'hidden',
+  },
+  mapVignette: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    boxShadow: 'inset 0 0 60px rgba(100, 70, 40, 0.4)',
+    pointerEvents: 'none',
+    zIndex: 900,
+  },
+  cornerTopLeft: {
+    position: 'absolute',
+    top: '-20px', left: '-20px',
+    width: '140px', height: '140px',
+    backgroundImage: 'url(/haokeqiang_pattern.png)',
+    backgroundSize: 'contain',
+    opacity: 0.25,
+    mixBlendMode: 'multiply',
+    pointerEvents: 'none',
+    zIndex: 900,
+  },
+  cornerTopRight: {
+    position: 'absolute',
+    top: '-20px', right: '-20px',
+    width: '140px', height: '140px',
+    backgroundImage: 'url(/gongleyuan_pattern.png)',
+    backgroundSize: 'contain',
+    opacity: 0.25,
+    mixBlendMode: 'multiply',
+    pointerEvents: 'none',
+    zIndex: 900,
+    transform: 'scaleX(-1)',
+  },
+  cornerBottomLeft: {
+    position: 'absolute',
+    bottom: '-20px', left: '-20px',
+    width: '140px', height: '140px',
+    backgroundImage: 'url(/tangjia_sanmiao_pattern.png)',
+    backgroundSize: 'contain',
+    opacity: 0.25,
+    mixBlendMode: 'multiply',
+    pointerEvents: 'none',
+    zIndex: 900,
+    transform: 'scaleY(-1)', 
+  },
+  cornerBottomRight: {
+    position: 'absolute',
+    bottom: '-20px', right: '-20px',
+    width: '140px', height: '140px',
+    backgroundImage: 'url(/haokeqiang_pattern.png)',
+    backgroundSize: 'contain',
+    opacity: 0.25,
+    mixBlendMode: 'multiply',
+    pointerEvents: 'none',
+    zIndex: 900,
+    transform: 'scale(-1, -1)', 
   },
   expandHint: {
     position: 'absolute',

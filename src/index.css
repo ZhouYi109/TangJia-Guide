@@ -114,6 +114,13 @@ a {
 }
 
 /* Leaflet 自定义 Marker 样式 */
+
+/* 真实地图定制化：复古牛皮纸/浅棕色调滤镜 */
+.leaflet-tile {
+  filter: sepia(0.6) hue-rotate(345deg) saturate(0.6) contrast(1.1) brightness(1.05) !important;
+  transition: filter 0.5s ease;
+}
+
 .custom-node-marker {
   display: flex !important;
   flex-direction: column;
