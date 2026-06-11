@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
-import MapLightbox from '../components/MapLightbox';
 import useGeolocation, { getDistance } from '../hooks/useGeolocation';
 import useCompass from '../hooks/useCompass';
 import { nodes, getMapPositionPercent } from '../data/nodes';
@@ -190,14 +189,17 @@ export default function Home() {
         </section>
       </div>
 
-      <MapLightbox 
-        isOpen={mapOpen} 
-        onClose={() => setMapOpen(false)} 
-        imageSrc="/global_map.png"
-      >
-        {/* 全屏模式下，手绘图被放大，定位点随之缩放跟随 */}
-        {renderUserMarker()}
-      </MapLightbox>
+      {/* 横向全屏沉浸模式 */}
+      {mapOpen && (
+        <div style={styles.landscapeOverlay} onClick={() => setMapOpen(false)}>
+          <div style={styles.landscapeMapContainer}>
+            <img src="/global_map.png" alt="全局地图横屏" style={styles.landscapeMap} />
+            {/* 全屏模式下，手绘图被放大，定位点随之缩放跟随 */}
+            {renderUserMarker()}
+          </div>
+          <div style={styles.closeHint}>点击任意处退出全屏</div>
+        </div>
+      )}
     </>
   );
 }
@@ -431,5 +433,45 @@ const styles = {
     fontWeight: 'bold',
     boxShadow: '0 2px 8px rgba(26, 91, 127, 0.4)',
     transition: 'transform 0.05s ease-out', 
+  },
+  landscapeOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#000',
+    zIndex: 9999,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  landscapeMapContainer: {
+    position: 'relative',
+    width: '100vh',
+    height: '100vw',
+    transform: 'rotate(90deg)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  landscapeMap: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+  },
+  closeHint: {
+    position: 'absolute',
+    bottom: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    backdropFilter: 'blur(4px)',
+    color: '#fff',
+    padding: '8px 16px',
+    borderRadius: '20px',
+    fontSize: '14px',
+    pointerEvents: 'none',
+    zIndex: 10000,
   }
 };

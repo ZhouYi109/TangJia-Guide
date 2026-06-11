@@ -7,8 +7,6 @@ import { nodes } from '../data/nodes';
 export default function NodeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [mapOpen, setMapOpen] = useState(false);
-
   // 查找对应节点数据
   const data = nodes.find(n => n.id === id) || nodes[0];
 
@@ -25,11 +23,17 @@ export default function NodeDetail() {
 
       <div className="page-content" style={{ ...styles.container, paddingTop: 0 }}>
         
+        {/* 新增：海报级封面大图 */}
+        {data.posterImage && (
+          <div style={styles.posterContainer}>
+            <img src={data.posterImage} alt={`${data.name}海报`} style={styles.posterImg} />
+          </div>
+        )}
+
         {/* 节点导视图区域 (无遮挡设计) */}
         <div style={styles.mapBox}>
-          <div style={styles.inlineMapContainer} onClick={() => setMapOpen(true)}>
+          <div style={styles.inlineMapContainer}>
             <img src={data.mapImage} alt={`${data.name}导视图`} style={styles.nodeMap} />
-            <div style={styles.expandHint}>点击放大导视图</div>
           </div>
           
           {/* 标签放在图片下方，彻底解决遮挡 */}
@@ -52,13 +56,6 @@ export default function NodeDetail() {
           <p style={styles.text}>{data.feature}</p>
         </div>
       </div>
-
-      {/* 节点专用导视图的全屏互动模式 */}
-      <MapLightbox 
-        isOpen={mapOpen} 
-        onClose={() => setMapOpen(false)} 
-        imageSrc={data.mapImage}
-      />
     </>
   );
 }
@@ -89,7 +86,6 @@ const styles = {
   inlineMapContainer: {
     position: 'relative',
     width: '100%',
-    cursor: 'pointer',
     overflow: 'hidden',
   },
   nodeMap: {
@@ -98,17 +94,19 @@ const styles = {
     objectFit: 'cover',
     display: 'block',
   },
-  expandHint: {
-    position: 'absolute',
-    right: '12px',
-    bottom: '12px',
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    color: '#fff',
-    fontSize: '11px',
-    padding: '4px 8px',
-    borderRadius: '12px',
-    backdropFilter: 'blur(4px)',
-    pointerEvents: 'none',
+  posterContainer: {
+    width: '100%',
+    height: '40vh',
+    margin: '0 -20px 20px -20px',
+    width: 'calc(100% + 40px)',
+  },
+  posterImg: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    borderBottomLeftRadius: '16px',
+    borderBottomRightRadius: '16px',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
   },
   tagList: {
     display: 'flex',

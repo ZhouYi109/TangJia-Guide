@@ -6,7 +6,8 @@ export const nodes = [
     description: '唐家三庙由圣堂庙、文武帝庙和金花庙组成，是唐家湾古镇的信仰中心。这里的建筑立面保留了大量的传统灰塑与木雕细节。',
     feature: '屋脊上的灰塑瑞兽呈现出高级的青砖黛灰色调，是岭南建筑中极具代表性的现象学视觉元素。',
     coords: { latitude: 22.35824, longitude: 113.59739 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_sanmiao.png'
   },
   {
     id: 'gongleyuan', category: 'attraction',
@@ -15,7 +16,8 @@ export const nodes = [
     description: '原为唐绍仪的私人花园，其建筑风格体现了晚清民国时期唐家湾作为“买办故里”的开放包容。',
     feature: '建筑中大量使用了进口水泥（红毛泥）与西式铸铁花窗，形成了传统与近代工业材料交融的独特美学。',
     coords: { latitude: 22.36531, longitude: 113.59392 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_gongleyuan.png'
   },
   {
     id: 'haokeqiang', category: 'attraction',
@@ -24,7 +26,8 @@ export const nodes = [
     description: '利用成千上万个天然蚝壳呈45度角交错垒砌而成，不仅防潮，更在阳光下呈现出波浪起伏的鱼鳞状阴影。',
     feature: '这种粗粝的天然生态障壁，在强烈的岭南阳光下形成了高对比度的纯粹黑白光影效果，极具视觉冲击力。',
     coords: { latitude: 22.35678, longitude: 113.59912 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_haokeqiang.png'
   },
   {
     id: 'ruizhi-ci', category: 'attraction',
@@ -33,7 +36,8 @@ export const nodes = [
     description: '唐家湾现存规模宏大的清代祠堂，展现了古镇深厚的宗族文化底蕴。',
     feature: '精美的木雕与砖雕，体现了当时极高的工艺水平。',
     coords: { latitude: 22.35900, longitude: 113.59850 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_ruizhici.png'
   },
   {
     id: 'wangci-shanfang', category: 'attraction',
@@ -42,7 +46,8 @@ export const nodes = [
     description: '隐藏在古镇深处的一处清幽别院，适合静思与游赏。',
     feature: '空间布局曲径通幽，植被与建筑完美融合。',
     coords: { latitude: 22.36150, longitude: 113.59550 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_wangci.png'
   },
   {
     id: 'shanfang-lu', category: 'attraction',
@@ -51,7 +56,8 @@ export const nodes = [
     description: '唐家古镇的主轴线之一，两侧林立着百年老屋与现代文创小店。',
     feature: '长条石板铺就的路面，散发着迷人的历史岁月光泽。',
     coords: { latitude: 22.36050, longitude: 113.59700 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_shanfanglu.png'
   },
   {
     id: 'tangshaoyi-guju', category: 'attraction',
@@ -60,7 +66,8 @@ export const nodes = [
     description: '民国首任内阁总理唐绍仪的故居，见证了中国近代的风云变幻。',
     feature: '洋楼式的建筑风格，是中西建筑文化碰撞的实体档案。',
     coords: { latitude: 22.36300, longitude: 113.59620 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_tangshaoyi.png'
   },
   {
     id: 'chaguo-feiyi', category: 'attraction',
@@ -69,7 +76,8 @@ export const nodes = [
     description: '在这里可以品尝和体验制作唐家湾传统的非遗小吃“茶果”。',
     feature: '色彩丰富的民间糕点，也是极佳的视觉素材。',
     coords: { latitude: 22.35850, longitude: 113.59680 },
-    mapImage: '/node_map.png'
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_chaguo.png'
   },
 
   // 餐饮美食节点
