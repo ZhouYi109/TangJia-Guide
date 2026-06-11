@@ -1,3 +1,5 @@
+@import 'leaflet/dist/leaflet.css';
+
 :root {
   /* ==================
      唐家古镇色彩规范 
@@ -109,5 +111,93 @@ a {
   0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
   50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
   100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+}
+
+/* Leaflet 自定义 Marker 样式 */
+.custom-node-marker {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.node-marker-pin {
+  width: 14px;
+  height: 14px;
+  background-color: var(--color-accent-blue);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  pointer-events: auto;
+}
+
+.node-marker-label {
+  margin-top: 4px;
+  background-color: rgba(255,255,255,0.9);
+  color: var(--color-text-primary);
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transform: translateX(-50%);
+  margin-left: 7px;
+  pointer-events: auto;
+}
+
+.custom-user-marker {
+  position: relative;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-marker-pulse {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(239, 83, 80, 0.4);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.user-marker-core {
+  width: 12px;
+  height: 12px;
+  background-color: #EF5350;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.map-compass-arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 12px solid rgba(239, 83, 80, 0.8);
+  transform-origin: bottom center;
+  z-index: 3;
+}
+
+.user-marker-label-map {
+  position: absolute;
+  top: 100%;
+  margin-top: 6px;
+  background-color: rgba(255,255,255,0.9);
+  color: #D32F2F;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-weight: bold;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
