@@ -18,32 +18,17 @@ export function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// 节点的真实目标坐标
-export const NODE_COORDINATES = {
-  'tangjia-sanmiao': { latitude: 22.35824, longitude: 113.59739 }, // 唐家三庙
-  'gongleyuan': { latitude: 22.36531, longitude: 113.59392 },       // 共乐园
-  'haokeqiang': { latitude: 22.35678, longitude: 113.59912 }        // 蚝壳墙巷道
-};
+// 模拟演示时的虚拟位置：唐家湾镇中心某处
+const MOCK_POSITION = { latitude: 22.36100, longitude: 113.59600 };
 
-export default function useGeolocation(nodeId) {
+export default function useGeolocation() {
   const [position, setPosition] = useState(null);
   const [error, setError] = useState(null);
-  const [distance, setDistance] = useState(null);
-  const [isNearby, setIsNearby] = useState(false);
-  const [mockArrival, setMockArrival] = useState(false); // 允许模拟到达，方便调试/演示
-
-  const targetCoords = NODE_COORDINATES[nodeId];
+  const [isMocking, setIsMocking] = useState(false);
 
   useEffect(() => {
-    if (mockArrival) {
-      setDistance(15); // 模拟距离为15米 (小于50米)
-      setIsNearby(true);
-      return;
-    }
-
-    if (!targetCoords) {
-      setDistance(null);
-      setIsNearby(false);
+    if (isMocking) {
+      setPosition(MOCK_POSITION);
       return;
     }
 
@@ -53,27 +38,18 @@ export default function useGeolocation(nodeId) {
     }
 
     const handleSuccess = (pos) => {
-      const { latitude, longitude } = pos.coords;
-      setPosition({ latitude, longitude });
-      
-      const dist = getDistance(
-        latitude,
-        longitude,
-        targetCoords.latitude,
-        targetCoords.longitude
-      );
-      setDistance(dist);
-      setIsNearby(dist <= 50); // 50米范围内视为到达附近
+      setPosition({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude
+      });
+      setError(null);
     };
 
     const handleError = (err) => {
       console.warn('Geolocation error:', err);
       setError(err.message);
-      // 如果定位失败且没有模拟到达，依然设定为 false
-      setIsNearby(false);
     };
 
-    // 开启高精度定位并持续监听
     const options = {
       enableHighAccuracy: true,
       timeout: 10000,
@@ -87,14 +63,12 @@ export default function useGeolocation(nodeId) {
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
-  }, [nodeId, mockArrival]);
+  }, [isMocking]);
 
   return {
     position,
     error,
-    distance,
-    isNearby,
-    mockArrival,
-    setMockArrival
+    isMocking,
+    setIsMocking
   };
 }
