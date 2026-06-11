@@ -119,6 +119,8 @@ a {
 .leaflet-tile {
   filter: sepia(0.6) hue-rotate(345deg) saturate(0.6) contrast(1.1) brightness(1.05) !important;
   transition: filter 0.5s ease;
+  transform: translateZ(0); /* 强制开启 GPU 硬件加速，防止移动端滤镜导致像素模糊 */
+  will-change: filter, transform;
 }
 
 .custom-node-marker {
