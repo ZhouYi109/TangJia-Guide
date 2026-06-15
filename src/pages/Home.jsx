@@ -265,8 +265,7 @@ const styles = {
   },
   globalMap: {
     width: '100%',
-    height: '240px',
-    objectFit: 'cover',
+    height: 'auto',
     display: 'block',
   },
   expandHint: {
