@@ -70,14 +70,59 @@ export const nodes = [
     posterImage: '/posters/poster_tangshaoyi.png'
   },
   {
-    id: 'chaguo-feiyi', category: 'attraction',
-    name: '茶果非遗摊位',
-    tags: ['非遗美食', '民俗体验'],
-    description: '在这里可以品尝和体验制作唐家湾传统的非遗小吃“茶果”。',
-    feature: '色彩丰富的民间糕点，也是极佳的视觉素材。',
-    coords: { latitude: 22.35850, longitude: 113.59680 },
+    id: 'node_yuwo',
+    name: '玉我唐公祠',
+    category: 'attraction',
+    coords: { latitude: 22.35650, longitude: 113.59650 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_chaguo.png'
+    posterImage: '/posters/poster_yuwo.png',
+    rating: 4.8,
+    tags: ['宗祠文化', '历史建筑', '静谧'],
+    description: '玉我唐公祠是唐家湾镇的重要宗祠之一，建筑保留了典型的岭南特色，木雕精美，庭院深邃，是了解当地宗族历史的绝佳去处。'
+  },
+  {
+    id: 'node_disheng',
+    name: '唐涤生大剧院',
+    category: 'attraction',
+    coords: { latitude: 22.35580, longitude: 113.59850 },
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_sanmiao.png',
+    rating: 4.9,
+    tags: ['粤剧文化', '地标建筑', '艺术'],
+    description: '为了纪念著名粤剧编剧唐涤生而建立的大剧院。这里不仅有着现代化的舞台设备，更传承了浓厚的岭南戏曲文化气息。'
+  },
+  {
+    id: 'node_xiangsi',
+    name: '唐家湾乡思馆',
+    category: 'attraction',
+    coords: { latitude: 22.35480, longitude: 113.59950 },
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_sanmiao.png',
+    rating: 4.7,
+    tags: ['民俗记忆', '展览馆', '怀旧'],
+    description: '唐家湾乡思馆收藏了大量见证古镇发展的历史老物件与照片，带你穿越时光，品味那份浓浓的乡愁与记忆。'
+  },
+  {
+    id: 'node_liuxue',
+    name: '珠海留学文化馆',
+    category: 'attraction',
+    coords: { latitude: 22.35510, longitude: 113.59880 },
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_sanmiao.png',
+    rating: 4.9,
+    tags: ['留学历史', '中西合璧', '博物馆'],
+    description: '国内首个以留学文化为主题的博物馆，展现了近代容闳等唐家湾先驱出国留学的历史画卷，建筑风格中西交融，极具格调。'
+  },
+  {
+    id: 'node_liangshi',
+    name: '梁氏大宗祠',
+    category: 'attraction',
+    coords: { latitude: 22.35680, longitude: 113.60100 },
+    mapImage: '/node_map.png',
+    posterImage: '/posters/poster_sanmiao.png',
+    rating: 4.8,
+    tags: ['宗族重地', '岭南建筑', '古迹'],
+    description: '梁氏大宗祠建筑宏伟，雕梁画栋，庄严肃穆。作为唐家古镇规模较大的宗祠之一，它承载了梁氏家族几百年的沧桑与辉煌。'
   },
 
   // 餐饮美食节点
