@@ -135,6 +135,10 @@ export default function Home() {
               onClick={() => setActiveCategory('dining')}
             >🍜 餐饮</button>
             <button 
+              style={activeCategory === 'parking' ? styles.tabActive : styles.tabInactive}
+              onClick={() => setActiveCategory('parking')}
+            >🚗 停车</button>
+            <button 
               style={activeCategory === 'restroom' ? styles.tabActive : styles.tabInactive}
               onClick={() => setActiveCategory('restroom')}
             >🚻 卫生间</button>

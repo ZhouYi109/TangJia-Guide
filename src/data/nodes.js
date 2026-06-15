@@ -7,7 +7,8 @@ export const nodes = [
     feature: '屋脊上的灰塑瑞兽呈现出高级的青砖黛灰色调，是岭南建筑中极具代表性的现象学视觉元素。',
     coords: { latitude: 22.35824, longitude: 113.59739 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_sanmiao.png'
+    posterImage: '/posters/poster_sanmiao.png',
+    rating: 4.8
   },
   {
     id: 'gongleyuan', category: 'attraction',
@@ -15,9 +16,10 @@ export const nodes = [
     tags: ['中西合璧', '民国风情', '铁艺花窗'],
     description: '原为唐绍仪的私人花园，其建筑风格体现了晚清民国时期唐家湾作为“买办故里”的开放包容。',
     feature: '建筑中大量使用了进口水泥（红毛泥）与西式铸铁花窗，形成了传统与近代工业材料交融的独特美学。',
-    coords: { latitude: 22.36531, longitude: 113.59392 },
+    coords: { latitude: 22.36150, longitude: 113.59350 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_gongleyuan.png'
+    posterImage: '/posters/poster_gongleyuan.png',
+    rating: 4.9
   },
   {
     id: 'haokeqiang', category: 'attraction',
@@ -25,9 +27,10 @@ export const nodes = [
     tags: ['天然肌理', '生态美学', '光影变化'],
     description: '利用成千上万个天然蚝壳呈45度角交错垒砌而成，不仅防潮，更在阳光下呈现出波浪起伏的鱼鳞状阴影。',
     feature: '这种粗粝的天然生态障壁，在强烈的岭南阳光下形成了高对比度的纯粹黑白光影效果，极具视觉冲击力。',
-    coords: { latitude: 22.35678, longitude: 113.59912 },
+    coords: { latitude: 22.35900, longitude: 113.59800 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_haokeqiang.png'
+    posterImage: '/posters/poster_haokeqiang.png',
+    rating: 4.7
   },
   {
     id: 'ruizhi-ci', category: 'attraction',
@@ -37,7 +40,8 @@ export const nodes = [
     feature: '精美的木雕与砖雕，体现了当时极高的工艺水平。',
     coords: { latitude: 22.35900, longitude: 113.59850 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_ruizhici.png'
+    posterImage: '/posters/poster_ruizhici.png',
+    rating: 4.7
   },
   {
     id: 'wangci-shanfang', category: 'attraction',
@@ -45,9 +49,10 @@ export const nodes = [
     tags: ['私家园林', '静谧空间'],
     description: '隐藏在古镇深处的一处清幽别院，适合静思与游赏。',
     feature: '空间布局曲径通幽，植被与建筑完美融合。',
-    coords: { latitude: 22.36150, longitude: 113.59550 },
+    coords: { latitude: 22.35750, longitude: 113.59550 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_wangci.png'
+    posterImage: '/posters/poster_wangci.png',
+    rating: 4.8
   },
   {
     id: 'shanfang-lu', category: 'attraction',
@@ -55,9 +60,10 @@ export const nodes = [
     tags: ['古镇街巷', '生活气息'],
     description: '唐家古镇的主轴线之一，两侧林立着百年老屋与现代文创小店。',
     feature: '长条石板铺就的路面，散发着迷人的历史岁月光泽。',
-    coords: { latitude: 22.36050, longitude: 113.59700 },
+    coords: { latitude: 22.35780, longitude: 113.59600 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_shanfanglu.png'
+    posterImage: '/posters/poster_shanfanglu.png',
+    rating: 4.9
   },
   {
     id: 'tangshaoyi-guju', category: 'attraction',
@@ -65,9 +71,10 @@ export const nodes = [
     tags: ['历史名人', '民初洋楼'],
     description: '民国首任内阁总理唐绍仪的故居，见证了中国近代的风云变幻。',
     feature: '洋楼式的建筑风格，是中西建筑文化碰撞的实体档案。',
-    coords: { latitude: 22.36300, longitude: 113.59620 },
+    coords: { latitude: 22.35810, longitude: 113.59500 },
     mapImage: '/node_map.png',
-    posterImage: '/posters/poster_tangshaoyi.png'
+    posterImage: '/posters/poster_tangshaoyi.png',
+    rating: 4.9
   },
   {
     id: 'node_yuwo',
@@ -133,10 +140,33 @@ export const nodes = [
   { id: 'd5', category: 'dining', name: '钟姐螺蛳粉', tags: ['特色小吃', '排队王'], description: '地道柳州风味，隐藏在古镇的网红店。', rating: 4.8, coords: { latitude: 22.3580, longitude: 113.5980 }, mapImage: '/node_map.png' },
   { id: 'd6', category: 'dining', name: '唐家三公子火锅食吧', tags: ['夜宵首选', '火锅'], description: '朋友聚餐首选，新鲜食材。', rating: 4.5, coords: { latitude: 22.3565, longitude: 113.5975 }, mapImage: '/node_map.png' },
 
-  // 公共卫生间节点 (依据实际大型停车场及游客中心映射)
-  { id: 'r1', category: 'restroom', name: '公共卫生间 (共乐园1号停车场)', tags: ['免费开放', '无障碍设施'], description: '位于共乐园地上停车场入口旁。', coords: { latitude: 22.3650, longitude: 113.5930 }, mapImage: '/node_map.png' },
-  { id: 'r2', category: 'restroom', name: '公共卫生间 (山房路文化广场)', tags: ['免费开放', '游客中心旁'], description: '位于古镇核心文化广场游客休息点。', coords: { latitude: 22.3605, longitude: 113.5970 }, mapImage: '/node_map.png' },
-  { id: 'r3', category: 'restroom', name: '公共卫生间 (唐中路停车场)', tags: ['免费开放', '停车场旁'], description: '位于唐中路大型停车场边缘。', coords: { latitude: 22.3560, longitude: 113.5960 }, mapImage: '/node_map.png' },
+  // 公共设施节点
+  {
+    id: 'restroom-1', category: 'restroom',
+    name: '共乐园公厕',
+    tags: ['免费', '干净'],
+    description: '位于共乐园正门旁侧，方便游客使用。',
+    coords: { latitude: 22.36450, longitude: 113.59400 },
+    mapImage: '/node_map.png',
+    rating: 4.4
+  },
+  {
+    id: 'restroom-2', category: 'restroom',
+    name: '星级公厕',
+    tags: ['免费', '无障碍'],
+    description: '位于古镇中心区域的星级公共卫生间，设施齐全。',
+    feature: '提供母婴室和无障碍通道。',
+    coords: { latitude: 22.35700, longitude: 113.59600 },
+    mapImage: '/node_map.png',
+    rating: 4.5
+  },
+  { id: 'r2', category: 'restroom', name: '公共卫生间 (山房路文化广场)', tags: ['免费开放', '游客中心旁'], description: '位于古镇核心文化广场游客休息点。', coords: { latitude: 22.3605, longitude: 113.5970 }, mapImage: '/node_map.png', rating: 4.3 },
+  { id: 'r3', category: 'restroom', name: '公共卫生间 (唐中路停车场)', tags: ['免费开放', '停车场旁'], description: '位于唐中路大型停车场边缘。', coords: { latitude: 22.3560, longitude: 113.5960 }, mapImage: '/node_map.png', rating: 4.2 },
+
+  // 停车场节点
+  { id: 'p1', category: 'parking', name: '唐中路大型停车场', tags: ['收费', '车位充足'], description: '古镇外围最大的公共停车场，建议自驾游客首选。', rating: 4.5, coords: { latitude: 22.3550, longitude: 113.5950 }, mapImage: '/node_map.png' },
+  { id: 'p2', category: 'parking', name: '共乐园1号停车场', tags: ['免费', '景区直达'], description: '位于共乐园正门，车位较少，先到先得。', rating: 4.6, coords: { latitude: 22.3655, longitude: 113.5920 }, mapImage: '/node_map.png' },
+  { id: 'p3', category: 'parking', name: '唐家市场侧边停车场', tags: ['收费', '近生活区'], description: '靠近本地居民区和餐饮街，适合就餐停车。', rating: 4.3, coords: { latitude: 22.3585, longitude: 113.5990 }, mapImage: '/node_map.png' }
 ];
 
 // 全局地图的虚拟边界极点 (用于换算定位在图片上的相对位置)
