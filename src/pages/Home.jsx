@@ -237,11 +237,11 @@ export default function Home() {
         </section>
       </div>
 
-      {/* 横向全屏沉浸模式 */}
+      {/* 纵向全屏沉浸模式 */}
       {mapOpen && (
-        <div style={styles.landscapeOverlay} onClick={() => setMapOpen(false)}>
-          <div style={styles.landscapeMapContainer}>
-            <img src="/global_map.png" alt="全局地图横屏" style={styles.landscapeMap} />
+        <div style={styles.fullscreenOverlay} onClick={() => setMapOpen(false)}>
+          <div style={styles.fullscreenMapContainer}>
+            <img src="/global_map.png" alt="全局地图全屏" style={styles.fullscreenMap} />
             {/* 全屏模式下，手绘图被放大，定位点随之缩放跟随 */}
             {renderUserMarker()}
           </div>
@@ -482,7 +482,7 @@ const styles = {
     boxShadow: '0 2px 8px rgba(26, 91, 127, 0.4)',
     transition: 'transform 0.05s ease-out', 
   },
-  landscapeOverlay: {
+  fullscreenOverlay: {
     position: 'fixed',
     top: 0,
     left: 0,
@@ -494,16 +494,15 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  landscapeMapContainer: {
+  fullscreenMapContainer: {
     position: 'relative',
-    width: '100vh',
-    height: '100vw',
-    transform: 'rotate(90deg)',
+    width: '100vw',
+    height: '100vh',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  landscapeMap: {
+  fullscreenMap: {
     width: '100%',
     height: '100%',
     objectFit: 'contain',
