@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from '../components/BottomNav';
+import MapLightbox from '../components/MapLightbox';
 import useGeolocation, { getDistance } from '../hooks/useGeolocation';
 import useCompass from '../hooks/useCompass';
 import { nodes, getMapPositionPercent } from '../data/nodes';
@@ -237,17 +238,15 @@ export default function Home() {
         </section>
       </div>
 
-      {/* 纵向全屏沉浸模式 */}
-      {mapOpen && (
-        <div style={styles.fullscreenOverlay} onClick={() => setMapOpen(false)}>
-          <div style={styles.fullscreenMapContainer}>
-            <img src="/global_map.png" alt="全局地图全屏" style={styles.fullscreenMap} />
-            {/* 全屏模式下，手绘图被放大，定位点随之缩放跟随 */}
-            {renderUserMarker()}
-          </div>
-          <div style={styles.closeHint}>点击任意处退出全屏</div>
-        </div>
-      )}
+      {/* 随手机自动旋转且支持缩放的沉浸模式 */}
+      <MapLightbox 
+        isOpen={mapOpen} 
+        onClose={() => setMapOpen(false)} 
+        imageSrc="/global_map.png"
+      >
+        {/* 定位点随之缩放跟随 */}
+        {renderUserMarker()}
+      </MapLightbox>
     </>
   );
 }
