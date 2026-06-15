@@ -100,12 +100,25 @@ export const MAP_BOUNDS = {
   bottomRight: { latitude: 22.35000, longitude: 113.60500 }
 };
 
+// 新版实体导视牌图片中，真正地图区域所占的百分比范围（经过视觉估算校验）
+export const IMAGE_MAP_AREA = {
+  minX: 18, // 地图左边缘约占整张图片宽度的 18%
+  maxX: 82, // 地图右边缘约占整张图片宽度的 82%
+  minY: 23, // 地图上边缘约占整张图片高度的 23%
+  maxY: 57  // 地图下边缘约占整张图片高度的 57%
+};
+
 // 工具函数：获取某坐标在全局地图中的百分比位置
 export function getMapPositionPercent(lat, lon) {
   const { topLeft, bottomRight } = MAP_BOUNDS;
   
-  const xPercent = ((lon - topLeft.longitude) / (bottomRight.longitude - topLeft.longitude)) * 100;
-  const yPercent = ((topLeft.latitude - lat) / (topLeft.latitude - bottomRight.latitude)) * 100;
+  // 地理极点相对位置 (0 到 1)
+  const rawXPercent = (lon - topLeft.longitude) / (bottomRight.longitude - topLeft.longitude);
+  const rawYPercent = (topLeft.latitude - lat) / (topLeft.latitude - bottomRight.latitude);
+  
+  // 强制映射到导视牌图片内部的真实矩形框中
+  const xPercent = IMAGE_MAP_AREA.minX + rawXPercent * (IMAGE_MAP_AREA.maxX - IMAGE_MAP_AREA.minX);
+  const yPercent = IMAGE_MAP_AREA.minY + rawYPercent * (IMAGE_MAP_AREA.maxY - IMAGE_MAP_AREA.minY);
   
   return {
     x: Math.max(0, Math.min(100, xPercent)),

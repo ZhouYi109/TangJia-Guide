@@ -85,7 +85,7 @@ export default function Home() {
           </div>
           
           <div style={styles.mapTextContent}>
-            <h2 style={styles.subtitle}>唐家古镇导览系统</h2>
+            <h2 style={styles.subtitle}>唐家古镇 智能导览</h2>
             <p style={styles.description}>
               实时定位系统已开启。点击下方按钮激活罗盘，系统将根据您的手机朝向，为您实时指引每个景点的方向。
             </p>
@@ -139,6 +139,54 @@ export default function Home() {
             >🚻 卫生间</button>
           </div>
 
+          {/* 同步导视牌：推荐游览线路 */}
+          <div style={styles.boardSection}>
+            <h3 style={styles.sectionTitle}>推荐线路</h3>
+            <div style={styles.routeCard}>
+              <div style={styles.routeHeader}>
+                <span style={styles.routeName}>线路A 自然景观线</span>
+                <span style={styles.routeTime}>20 min</span>
+              </div>
+              <div style={styles.routePath}>共乐园 ➔ 唐家三庙 ➔ 梁氏大宗祠</div>
+            </div>
+            
+            <div style={styles.routeCard}>
+              <div style={styles.routeHeader}>
+                <span style={styles.routeName}>线路B 历史文化线</span>
+                <span style={styles.routeTime}>45 min</span>
+              </div>
+              <div style={styles.routePath}>望慈山房 ➔ 唐绍仪故居 ➔ 珠海留学文化馆 ➔ 唐涤生大剧院 ➔ 唐家湾乡思馆 ➔ 瑞芝祠</div>
+            </div>
+
+            <div style={styles.routeCard}>
+              <div style={styles.routeHeader}>
+                <span style={styles.routeName}>线路C 休闲漫游线</span>
+                <span style={styles.routeTime}>30 min</span>
+              </div>
+              <div style={styles.routePath}>山房路 ➔ 共乐园</div>
+            </div>
+          </div>
+
+          {/* 同步导视牌：智能体验 */}
+          <div style={styles.boardSection}>
+            <h3 style={styles.sectionTitle}>智能体验</h3>
+            <div style={styles.experienceGrid}>
+              <div style={styles.expItem}>
+                <h4 style={{margin: '0 0 4px 0'}}>📱 扫码导览</h4>
+                <p style={{margin: 0, fontSize: '11px', color: 'var(--color-text-secondary)'}}>开启语音导览与智能路线规划</p>
+              </div>
+              <div style={styles.expItem}>
+                <h4 style={{margin: '0 0 4px 0'}}>📍 节点打卡</h4>
+                <p style={{margin: 0, fontSize: '11px', color: 'var(--color-text-secondary)'}}>探访特色景点，打卡记录精彩瞬间</p>
+              </div>
+              <div style={styles.expItem}>
+                <h4 style={{margin: '0 0 4px 0'}}>💠 纹样收集</h4>
+                <p style={{margin: 0, fontSize: '11px', color: 'var(--color-text-secondary)'}}>发现古镇纹样，收集特色图鉴</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 style={styles.sectionTitle}>附近向导点位 ({sortedNodes.length})</h3>
           <div style={styles.nodeList}>
             {sortedNodes.map((node) => (
               <div 
@@ -473,5 +521,43 @@ const styles = {
     fontSize: '14px',
     pointerEvents: 'none',
     zIndex: 10000,
+  },
+  boardSection: {
+    marginBottom: '20px',
+  },
+  routeCard: {
+    backgroundColor: 'rgba(255,255,255,0.6)',
+    padding: '12px',
+    borderRadius: '8px',
+    marginBottom: '10px',
+    borderLeft: '4px solid var(--color-accent-blue)',
+    border: '1px solid rgba(255,255,255,0.8)'
+  },
+  routeHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '6px',
+    fontWeight: 'bold',
+    color: 'var(--color-text-primary)'
+  },
+  routeTime: {
+    color: 'var(--color-text-secondary)',
+    fontSize: '12px'
+  },
+  routePath: {
+    fontSize: '12px',
+    color: 'var(--color-text-secondary)',
+    lineHeight: '1.6'
+  },
+  experienceGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gap: '12px'
+  },
+  expItem: {
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    padding: '12px',
+    borderRadius: '8px',
+    border: '1px solid var(--color-border)'
   }
 };
