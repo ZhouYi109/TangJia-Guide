@@ -60,12 +60,12 @@ export default function Home() {
       >
         <div style={styles.userMarkerPulse}></div>
         
-        {/* 新版特色定位标：包含蚝壳墙与三雕图案的圆框 */}
-        <div style={styles.customPinBody}>
-          <img src="/user_marker.png" alt="定位标" style={styles.customPinImage} />
+        {/* 新版特色定位标：不规则有机水滴形 */}
+        <div style={styles.customPinWrapper}>
+          <div style={styles.customPinBody}>
+            <img src="/user_marker.png" alt="定位标" style={styles.customPinImage} />
+          </div>
         </div>
-        {/* 定位标底部的尖角 */}
-        <div style={styles.customPinPointer}></div>
         {heading !== null && (
           <div style={{
             ...styles.mapCompassArrow,
@@ -311,42 +311,41 @@ const styles = {
   },
   userMarkerPulse: {
     position: 'absolute',
-    width: '32px',
-    height: '32px',
-    backgroundColor: 'rgba(239, 83, 80, 0.4)',
+    width: '36px',
+    height: '36px',
+    backgroundColor: 'rgba(180, 100, 50, 0.4)',
     borderRadius: '50%',
     animation: 'pulse 2s infinite',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
   },
-  customPinBody: {
-    width: '36px',
-    height: '36px',
-    borderRadius: '50%',
-    border: '3px solid #8c7a61',
-    overflow: 'hidden',
-    backgroundColor: '#fff',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+  customPinWrapper: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, calc(-50% - 15px))',
     zIndex: 2,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    pointerEvents: 'none',
+  },
+  customPinBody: {
+    width: '22px',
+    height: '22px',
+    borderRadius: '50% 60% 50% 2px',
+    border: '2px solid rgba(100, 80, 60, 0.85)',
+    overflow: 'hidden',
+    boxShadow: '2px 2px 5px rgba(0,0,0,0.4)',
+    transform: 'rotate(-45deg)',
   },
   customPinImage: {
-    width: '100%',
-    height: '100%',
+    width: '160%',
+    height: '160%',
     objectFit: 'cover',
-  },
-  customPinPointer: {
-    width: '0',
-    height: '0',
-    borderLeft: '9px solid transparent',
-    borderRight: '9px solid transparent',
-    borderTop: '12px solid #8c7a61',
-    marginTop: '-4px', // 向上偏移以和圆框边框无缝连接
-    zIndex: 1,
-    filter: 'drop-shadow(0 4px 4px rgba(0,0,0,0.2))'
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%) rotate(45deg)',
+    filter: 'sepia(0.4) contrast(0.9) brightness(0.85)',
   },
   mapCompassArrow: {
     position: 'absolute',
@@ -356,20 +355,22 @@ const styles = {
     height: '0',
     borderLeft: '4px solid transparent',
     borderRight: '4px solid transparent',
-    borderBottom: '12px solid rgba(239, 83, 80, 0.9)',
+    borderBottom: '14px solid rgba(139, 0, 0, 0.8)',
     transformOrigin: 'bottom center',
     zIndex: 3,
   },
   userMarkerLabel: {
-    marginTop: '6px',
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    color: '#D32F2F',
+    marginTop: '12px',
+    backgroundColor: 'rgba(240,230,215,0.9)',
+    color: '#8B0000',
+    border: '1px solid rgba(140,110,90,0.5)',
     fontSize: '10px',
     padding: '2px 6px',
-    borderRadius: '8px',
+    borderRadius: '4px',
     fontWeight: 'bold',
     whiteSpace: 'nowrap',
     boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    zIndex: 3,
   },
   mapTextContent: {
     padding: '16px 20px',
