@@ -200,3 +200,18 @@ export function getMapPositionPercent(lat, lon) {
     y: Math.max(0, Math.min(100, yPercent))
   };
 }
+
+// 工具函数：根据地图点击的百分比坐标，反推真实的 GPS 坐标
+export function getCoordsFromMapPercent(xPercent, yPercent) {
+  const { topLeft, bottomRight } = MAP_BOUNDS;
+  
+  // 反推 relative raw percentages (0 到 1)
+  const rawXPercent = (xPercent - IMAGE_MAP_AREA.minX) / (IMAGE_MAP_AREA.maxX - IMAGE_MAP_AREA.minX);
+  const rawYPercent = (yPercent - IMAGE_MAP_AREA.minY) / (IMAGE_MAP_AREA.maxY - IMAGE_MAP_AREA.minY);
+  
+  // 计算对应的经纬度
+  const lon = topLeft.longitude + rawXPercent * (bottomRight.longitude - topLeft.longitude);
+  const lat = topLeft.latitude - rawYPercent * (topLeft.latitude - bottomRight.latitude);
+  
+  return { latitude: lat, longitude: lon };
+}

@@ -18,17 +18,39 @@ export function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// 模拟演示时的虚拟位置：唐家湾镇中心某处
-const MOCK_POSITION = { latitude: 22.36100, longitude: 113.59600 };
+// 全局模拟状态
+let globalIsMocking = false;
+let globalMockPosition = { latitude: 22.36100, longitude: 113.59600 };
+const listeners = new Set();
+
+export function setGlobalMockState(isMocking, position = null) {
+  globalIsMocking = isMocking;
+  if (position) globalMockPosition = position;
+  listeners.forEach(fn => fn());
+}
 
 export default function useGeolocation() {
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState(globalIsMocking ? globalMockPosition : null);
   const [error, setError] = useState(null);
-  const [isMocking, setIsMocking] = useState(false);
+  const [isMocking, setIsMockingState] = useState(globalIsMocking);
+  const [mockPosition, setMockPositionState] = useState(globalMockPosition);
+
+  // 同步全局状态
+  useEffect(() => {
+    const update = () => {
+      setIsMockingState(globalIsMocking);
+      setMockPositionState(globalMockPosition);
+    };
+    listeners.add(update);
+    return () => listeners.delete(update);
+  }, []);
+
+  const setIsMocking = (val) => setGlobalMockState(val, globalMockPosition);
+  const setMockPosition = (pos) => setGlobalMockState(globalIsMocking, pos);
 
   useEffect(() => {
     if (isMocking) {
-      setPosition(MOCK_POSITION);
+      setPosition(mockPosition);
       return;
     }
 
@@ -63,12 +85,13 @@ export default function useGeolocation() {
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
-  }, [isMocking]);
+  }, [isMocking, mockPosition]);
 
   return {
     position,
     error,
     isMocking,
-    setIsMocking
+    setIsMocking,
+    setMockPosition
   };
 }

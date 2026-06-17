@@ -1,8 +1,18 @@
 import React from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
-export default function MapLightbox({ isOpen, onClose, imageSrc, children }) {
+export default function MapLightbox({ isOpen, onClose, imageSrc, children, onClickMap }) {
   if (!isOpen) return null;
+
+  const handleMapClick = (e) => {
+    if (!onClickMap) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+    onClickMap(xPercent, yPercent);
+  };
 
   return (
     <div style={styles.overlay}>
@@ -20,7 +30,7 @@ export default function MapLightbox({ isOpen, onClose, imageSrc, children }) {
         limitToBounds={false}
       >
         <TransformComponent wrapperStyle={{ width: "100vw", height: "100vh" }}>
-          <div style={styles.mapContainer}>
+          <div style={styles.mapContainer} onClick={handleMapClick}>
             <img src={imageSrc} alt="全屏导视图" style={styles.mapImage} />
             {/* 子元素（如定位红点）将附着在图片上一起缩放和平移 */}
             {children}

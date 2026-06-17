@@ -4,7 +4,7 @@ import BottomNav from '../components/BottomNav';
 import MapLightbox from '../components/MapLightbox';
 import useGeolocation, { getDistance } from '../hooks/useGeolocation';
 import useCompass from '../hooks/useCompass';
-import { nodes, getMapPositionPercent } from '../data/nodes';
+import { nodes, getMapPositionPercent, getCoordsFromMapPercent } from '../data/nodes';
 import { calculateBearing, getRelativeRotation } from '../utils/geoMath';
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
   const [mapOpen, setMapOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('attraction');
   
-  const { position, isMocking, setIsMocking } = useGeolocation();
+  const { position, isMocking, setIsMocking, setMockPosition } = useGeolocation();
   const { heading, error: compassError, permissionGranted, requestPermission } = useCompass();
 
   // 根据当前位置计算距离，并对节点进行排序
@@ -247,9 +247,20 @@ export default function Home() {
         isOpen={mapOpen} 
         onClose={() => setMapOpen(false)} 
         imageSrc="/global_map.png"
+        onClickMap={(xPercent, yPercent) => {
+          if (isMocking) {
+            const coords = getCoordsFromMapPercent(xPercent, yPercent);
+            setMockPosition(coords);
+          }
+        }}
       >
         {/* 定位点随之缩放跟随 */}
         {renderUserMarker()}
+        {isMocking && (
+          <div style={styles.mockHintOverlay}>
+            漫游模式已开启：请点击地图任意位置模拟巡游
+          </div>
+        )}
       </MapLightbox>
     </>
   );
@@ -560,5 +571,22 @@ const styles = {
     padding: '12px',
     borderRadius: '8px',
     border: '1px solid var(--color-border)'
+  },
+  mockHintOverlay: {
+    position: 'absolute',
+    top: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    backgroundColor: 'var(--color-accent-blue)',
+    color: '#fff',
+    padding: '8px 16px',
+    borderRadius: '20px',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    pointerEvents: 'none',
+    whiteSpace: 'nowrap',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+    zIndex: 10,
+    animation: 'pulse 2s infinite',
   }
 };
