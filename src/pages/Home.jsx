@@ -59,7 +59,13 @@ export default function Home() {
         }}
       >
         <div style={styles.userMarkerPulse}></div>
-        <div style={styles.userMarkerCore}></div>
+        
+        {/* 新版特色定位标：包含蚝壳墙与三雕图案的圆框 */}
+        <div style={styles.customPinBody}>
+          <img src="/user_marker.png" alt="定位标" style={styles.customPinImage} />
+        </div>
+        {/* 定位标底部的尖角 */}
+        <div style={styles.customPinPointer}></div>
         {heading !== null && (
           <div style={{
             ...styles.mapCompassArrow,
@@ -314,15 +320,33 @@ const styles = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
   },
-  userMarkerCore: {
-    width: '12px',
-    height: '12px',
-    backgroundColor: '#EF5350',
-    border: '2px solid #fff',
+  customPinBody: {
+    width: '36px',
+    height: '36px',
     borderRadius: '50%',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
-    position: 'relative',
+    border: '3px solid #8c7a61',
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
     zIndex: 2,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  customPinImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  customPinPointer: {
+    width: '0',
+    height: '0',
+    borderLeft: '9px solid transparent',
+    borderRight: '9px solid transparent',
+    borderTop: '12px solid #8c7a61',
+    marginTop: '-4px', // 向上偏移以和圆框边框无缝连接
+    zIndex: 1,
+    filter: 'drop-shadow(0 4px 4px rgba(0,0,0,0.2))'
   },
   mapCompassArrow: {
     position: 'absolute',
@@ -332,7 +356,7 @@ const styles = {
     height: '0',
     borderLeft: '4px solid transparent',
     borderRight: '4px solid transparent',
-    borderBottom: '12px solid rgba(239, 83, 80, 0.8)',
+    borderBottom: '12px solid rgba(239, 83, 80, 0.9)',
     transformOrigin: 'bottom center',
     zIndex: 3,
   },
