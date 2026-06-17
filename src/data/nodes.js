@@ -3,7 +3,7 @@ export const nodes = [
     id: 'tangjia-sanmiao', category: 'attraction',
     name: '唐家三庙',
     tags: ['宗族礼制', '清代建筑', '灰塑纹样'],
-    description: '唐家三庙由圣堂庙、文武帝庙和金花庙组成，是唐家湾古镇的信仰中心。这里的建筑立面保留了大量的传统灰塑与木雕细节。',
+    description: '唐家三庙是古镇代表性宗祠建筑群，承载宗族礼制传统，也体现清代岭南建筑的庄重与古朴风貌。',
     feature: '屋脊上的灰塑瑞兽呈现出高级的青砖黛灰色调，是岭南建筑中极具代表性的现象学视觉元素。',
     coords: { latitude: 22.35824, longitude: 113.59739 },
     mapImage: '/node_map.png',
@@ -14,7 +14,7 @@ export const nodes = [
     id: 'gongleyuan', category: 'attraction',
     name: '共乐园 (满洲窗老宅)',
     tags: ['中西合璧', '民国风情', '铁艺花窗'],
-    description: '原为唐绍仪的私人花园，其建筑风格体现了晚清民国时期唐家湾作为“买办故里”的开放包容。',
+    description: '共乐园融合园林与老宅特色，满洲窗极具辨识度，集中展现民国时期中西合璧的人居建筑风格。',
     feature: '建筑中大量使用了进口水泥（红毛泥）与西式铸铁花窗，形成了传统与近代工业材料交融的独特美学。',
     coords: { latitude: 22.36150, longitude: 113.59350 },
     mapImage: '/node_map.png',
@@ -25,7 +25,7 @@ export const nodes = [
     id: 'haokeqiang', category: 'attraction',
     name: '蚝壳墙巷道',
     tags: ['天然肌理', '生态美学', '光影变化'],
-    description: '利用成千上万个天然蚝壳呈45度角交错垒砌而成，不仅防潮，更在阳光下呈现出波浪起伏的鱼鳞状阴影。',
+    description: '蚝壳墙巷道以蚝壳砌墙而成，既实用又独特，充分展现岭南民居因地制宜的生态智慧与美学特色。',
     feature: '这种粗粝的天然生态障壁，在强烈的岭南阳光下形成了高对比度的纯粹黑白光影效果，极具视觉冲击力。',
     coords: { latitude: 22.35900, longitude: 113.59800 },
     mapImage: '/node_map.png',
@@ -36,7 +36,7 @@ export const nodes = [
     id: 'ruizhi-ci', category: 'attraction',
     name: '瑞芝唐公祠',
     tags: ['宗族礼制', '木雕工艺'],
-    description: '唐家湾现存规模宏大的清代祠堂，展现了古镇深厚的宗族文化底蕴。',
+    description: '瑞芝唐公祠是典型岭南宗祠建筑，木雕与装饰工艺精美，体现传统家族祭祀文化和历史传承。',
     feature: '精美的木雕与砖雕，体现了当时极高的工艺水平。',
     coords: { latitude: 22.35900, longitude: 113.59850 },
     mapImage: '/node_map.png',
@@ -47,7 +47,7 @@ export const nodes = [
     id: 'wangci-shanfang', category: 'attraction',
     name: '望慈山房',
     tags: ['私家园林', '静谧空间'],
-    description: '隐藏在古镇深处的一处清幽别院，适合静思与游赏。',
+    description: '望慈山房环境清幽雅致，兼具私家园林与书房气息，是古镇中体现静谧生活美学的重要空间。',
     feature: '空间布局曲径通幽，植被与建筑完美融合。',
     coords: { latitude: 22.35750, longitude: 113.59550 },
     mapImage: '/node_map.png',
@@ -58,7 +58,7 @@ export const nodes = [
     id: 'shanfang-lu', category: 'attraction',
     name: '山房路',
     tags: ['古镇街巷', '生活气息'],
-    description: '唐家古镇的主轴线之一，两侧林立着百年老屋与现代文创小店。',
+    description: '山房路是唐家古镇富有烟火气的街巷之一，保留古镇生活肌理，也展现传统街区的历史风貌。',
     feature: '长条石板铺就的路面，散发着迷人的历史岁月光泽。',
     coords: { latitude: 22.35780, longitude: 113.59600 },
     mapImage: '/node_map.png',
@@ -69,7 +69,7 @@ export const nodes = [
     id: 'tangshaoyi-guju', category: 'attraction',
     name: '唐绍仪故居',
     tags: ['历史名人', '民初洋楼'],
-    description: '民国首任内阁总理唐绍仪的故居，见证了中国近代的风云变幻。',
+    description: '唐绍仪故居记录历史名人的生活印记，建筑融合中西风格，是了解近代珠海人文历史的重要窗口。',
     feature: '洋楼式的建筑风格，是中西建筑文化碰撞的实体档案。',
     coords: { latitude: 22.35810, longitude: 113.59500 },
     mapImage: '/node_map.png',
@@ -85,7 +85,7 @@ export const nodes = [
     posterImage: '/posters/poster_yuwo.png',
     rating: 4.8,
     tags: ['宗祠文化', '历史建筑', '静谧'],
-    description: '玉我唐公祠是唐家湾镇的重要宗祠之一，建筑保留了典型的岭南特色，木雕精美，庭院深邃，是了解当地宗族历史的绝佳去处。'
+    description: '玉我唐公祠展现深厚宗祠文化与建筑艺术，整体格局严谨，具有鲜明的历史感和岭南传统特色。'
   },
   {
     id: 'node_disheng',
@@ -96,7 +96,7 @@ export const nodes = [
     posterImage: '/posters/poster_sanmiao.png',
     rating: 4.9,
     tags: ['粤剧文化', '地标建筑', '艺术'],
-    description: '为了纪念著名粤剧编剧唐涤生而建立的大剧院。这里不仅有着现代化的舞台设备，更传承了浓厚的岭南戏曲文化气息。'
+    description: '唐涤生大剧院以纪念粤剧名家为主题，是展示粤剧艺术、传播岭南戏曲文化的重要地标场馆。'
   },
   {
     id: 'node_xiangsi',
@@ -107,7 +107,7 @@ export const nodes = [
     posterImage: '/posters/poster_sanmiao.png',
     rating: 4.7,
     tags: ['民俗记忆', '展览馆', '怀旧'],
-    description: '唐家湾乡思馆收藏了大量见证古镇发展的历史老物件与照片，带你穿越时光，品味那份浓浓的乡愁与记忆。'
+    description: '唐家湾乡思馆通过展陈与史料，呈现本地民俗记忆、乡土情感与古镇发展脉络，文化气息浓厚。'
   },
   {
     id: 'node_liuxue',
@@ -118,7 +118,7 @@ export const nodes = [
     posterImage: '/posters/poster_sanmiao.png',
     rating: 4.9,
     tags: ['留学历史', '中西合璧', '博物馆'],
-    description: '国内首个以留学文化为主题的博物馆，展现了近代容闳等唐家湾先驱出国留学的历史画卷，建筑风格中西交融，极具格调。'
+    description: '珠海留学文化馆聚焦留学历史与中西交流，展现近代珠海开放进取的人文传统与时代精神。'
   },
   {
     id: 'node_liangshi',
@@ -129,7 +129,7 @@ export const nodes = [
     posterImage: '/posters/poster_sanmiao.png',
     rating: 4.8,
     tags: ['宗族重地', '岭南建筑', '古迹'],
-    description: '梁氏大宗祠建筑宏伟，雕梁画栋，庄严肃穆。作为唐家古镇规模较大的宗祠之一，它承载了梁氏家族几百年的沧桑与辉煌。'
+    description: '梁氏大宗祠是古镇重要的宗族建筑，气势庄重，集中体现岭南宗祠礼制文化与建筑艺术价值。'
   },
 
   // 餐饮美食节点
