@@ -1,10 +1,21 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { nodes } from '../data/nodes';
+import useGeolocation, { getDistance } from '../hooks/useGeolocation';
+import useCompass from '../hooks/useCompass';
+import { calculateBearing, getRelativeRotation } from '../utils/geoMath';
 
 export default function NodeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const data = nodes.find(n => n.id === id) || nodes[0];
+  
+  const { position } = useGeolocation();
+  const { heading, permissionGranted } = useCompass();
+  
+  const distance = position ? getDistance(position.latitude, position.longitude, data.coords.latitude, data.coords.longitude) : undefined;
+  const bearing = position ? calculateBearing(position.latitude, position.longitude, data.coords.latitude, data.coords.longitude) : undefined;
+  const rotation = (heading !== null && bearing !== undefined) ? getRelativeRotation(heading, bearing) : undefined;
+
   const posterSrc = data.posterImage || '/posters/poster_sanmiao.png';
 
   return (
@@ -25,11 +36,31 @@ export default function NodeDetail() {
               <p style={styles.description}>{data.description}</p>
               {data.feature && <p style={styles.feature}>{data.feature}</p>}
             </div>
-            
-            <div style={styles.tagList}>
-              {data.tags && data.tags.map((tag, idx) => (
-                <span key={idx} style={styles.tag}>{tag}</span>
-              ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={styles.bottomNavContainer}>
+        <div style={styles.distanceCard}>
+          <div style={styles.distInfo}>
+            <span style={styles.distLabel}>距您当前位置</span>
+            <span style={styles.distValue}>
+              {distance !== undefined ? (
+                distance > 1000 
+                  ? `${(distance / 1000).toFixed(2)} km` 
+                  : `${Math.round(distance)} m`
+              ) : '测距中...'}
+            </span>
+          </div>
+          
+          <div style={styles.navAction}>
+            <span style={styles.navHint}>实时指引</span>
+            <div style={styles.compassCircle}>
+              {permissionGranted && heading !== null && rotation !== undefined ? (
+                <div style={{ ...styles.navArrow, transform: `rotate(${rotation}deg)` }}>↑</div>
+              ) : (
+                <div style={styles.navArrowDisabled}>-</div>
+              )}
             </div>
           </div>
         </div>
@@ -87,10 +118,10 @@ const styles = {
   },
   parchmentArea: {
     position: 'absolute',
-    top: '24.5%',      // 避开顶部飞檐和玉石
-    bottom: '31%',     // 避开底部青砖和专属线稿图
-    left: '35.5%',     // 完美锁定在 1:1 图片中间的羊皮纸区域
-    right: '35.5%',
+    top: '26%',        // 增加顶部间距，避开内框
+    bottom: '36%',     // 增加底部间距，完全避开线稿
+    left: '39%',       // 收缩左右边距，防止碰到内框线
+    right: '39%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -136,21 +167,70 @@ const styles = {
     textAlign: 'justify',
     fontFamily: '"STKaiti", "KaiTi", serif',
   },
-  tagList: {
-    display: 'flex',
-    gap: '6px',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: '8px',
-    flexShrink: 0,
+  bottomNavContainer: {
+    position: 'absolute',
+    bottom: '24px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '90%',
+    maxWidth: '400px',
+    zIndex: 100,
   },
-  tag: {
-    fontSize: 'clamp(10px, 1.4vh, 12px)',
-    padding: '3px 8px',
+  distanceCard: {
+    backgroundColor: 'rgba(230, 222, 211, 0.85)',
+    backdropFilter: 'blur(8px)',
+    border: '1px solid rgba(140, 122, 97, 0.4)',
+    borderRadius: '16px',
+    padding: '12px 20px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+  },
+  distInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  },
+  distLabel: {
+    fontSize: '12px',
+    color: '#8c7a61',
+    fontWeight: 'bold',
+  },
+  distValue: {
+    fontSize: '20px',
+    color: '#3a342d',
+    fontWeight: '900',
+    fontFamily: 'sans-serif',
+  },
+  navAction: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  navHint: {
+    fontSize: '12px',
+    color: '#5c4e3c',
+    fontWeight: 'bold',
+  },
+  compassCircle: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
     backgroundColor: 'rgba(140, 122, 97, 0.1)',
     border: '1px solid #8c7a61',
-    color: '#5c4e3c',
-    borderRadius: '12px',
-    whiteSpace: 'nowrap',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  navArrow: {
+    fontSize: '20px',
+    color: '#2c2825',
+    fontWeight: '900',
+    transition: 'transform 0.05s ease-out',
+  },
+  navArrowDisabled: {
+    fontSize: '20px',
+    color: '#b8a48b',
   }
 };
