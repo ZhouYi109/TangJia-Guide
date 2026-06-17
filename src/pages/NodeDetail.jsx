@@ -34,7 +34,6 @@ export default function NodeDetail() {
             
             <div style={styles.scrollContent}>
               <p style={styles.description}>{data.description}</p>
-              {data.feature && <p style={styles.feature}>{data.feature}</p>}
             </div>
           </div>
         </div>
@@ -106,22 +105,29 @@ const styles = {
   },
   imageWrapper: {
     position: 'relative',
-    height: '96vh', // 适配屏幕高度，留出一点上下边距
-    aspectRatio: '1 / 1', // 强制绑定 AI 生成图的 1024x1024 原始比例，极其关键
-    flexShrink: 0,
+    width: '85vw',
+    maxWidth: '380px',
+    aspectRatio: '0.36 / 0.62', // 完美的羊皮纸比例
+    overflow: 'hidden',
+    borderRadius: '12px',
+    boxShadow: '0 12px 30px rgba(0,0,0,0.2)',
+    backgroundColor: '#e6ded3',
   },
   signboardImg: {
-    width: '100%',
-    height: '100%',
+    position: 'absolute',
+    width: '280%',     // 放大图片以去除木框
+    height: '160%',
+    top: '-32%',       // 精准定位到羊皮纸区域
+    left: '-90%',
     display: 'block',
-    filter: 'drop-shadow(0px 15px 25px rgba(0,0,0,0.2))',
+    filter: 'contrast(1.05) brightness(0.95)',
   },
   parchmentArea: {
     position: 'absolute',
-    top: '26%',        // 增加顶部间距，避开内框
-    bottom: '36%',     // 增加底部间距，完全避开线稿
-    left: '39%',       // 收缩左右边距，防止碰到内框线
-    right: '39%',
+    top: '8%',         // 相对于羊皮纸的顶部留白
+    bottom: '38%',     // 彻底避开底部的线稿图，不再重叠
+    left: '12%',       // 左右留出安全边距
+    right: '12%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -152,20 +158,13 @@ const styles = {
     scrollbarWidth: 'none', 
   },
   description: {
-    fontSize: 'clamp(14px, 1.8vh, 16px)',
+    fontSize: 'clamp(14px, 2vh, 18px)', // 稍微放大一点描述文字
     color: '#3a342d',
-    lineHeight: '1.7',
+    lineHeight: '1.8',
     textAlign: 'justify',
     fontFamily: '"STKaiti", "KaiTi", serif',
     fontWeight: '600',
     marginBottom: '12px',
-  },
-  feature: {
-    fontSize: 'clamp(12px, 1.6vh, 14px)',
-    color: '#5c4e3c',
-    lineHeight: '1.6',
-    textAlign: 'justify',
-    fontFamily: '"STKaiti", "KaiTi", serif',
   },
   bottomNavContainer: {
     position: 'absolute',
