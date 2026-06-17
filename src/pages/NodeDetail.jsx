@@ -14,17 +14,21 @@ export default function NodeDetail() {
   
   const distance = position ? getDistance(position.latitude, position.longitude, data.coords.latitude, data.coords.longitude) : undefined;
   const bearing = position ? calculateBearing(position.latitude, position.longitude, data.coords.latitude, data.coords.longitude) : undefined;
-  const rotation = (heading !== null && bearing !== undefined) ? getRelativeRotation(heading, bearing) : undefined;
+  const arrowRotation = (heading !== null && bearing !== undefined) ? getRelativeRotation(heading, bearing) : null;
+  const distanceText = {
+    value: distance !== undefined ? (distance > 1000 ? (distance / 1000).toFixed(2) : Math.round(distance)) : '--',
+    unit: distance !== undefined ? (distance > 1000 ? 'km' : 'm') : ''
+  };
 
   const posterSrc = data.posterImage || '/posters/poster_sanmiao.png';
 
   return (
-    <div style={styles.pageBackground}>
-      <button style={styles.backBtn} onClick={() => navigate(-1)}>
-        ‹ 返回向导
+    <div style={styles.screenWrapper}>
+      <button style={styles.backBtn} onClick={() => navigate('/')}>
+        <span style={{ fontSize: '20px' }}>←</span> 返回地图
       </button>
 
-      <div style={styles.screenWrapper}>
+      <div style={styles.mainContent}>
         <div style={styles.imageWrapper}>
           <img src={posterSrc} alt="导视牌" style={styles.signboardImg} />
           
@@ -39,28 +43,30 @@ export default function NodeDetail() {
         </div>
       </div>
 
-      <div style={styles.bottomNavContainer}>
-        <div style={styles.distanceCard}>
-          <div style={styles.distInfo}>
-            <span style={styles.distLabel}>距您当前位置</span>
-            <span style={styles.distValue}>
-              {distance !== undefined ? (
-                distance > 1000 
-                  ? `${(distance / 1000).toFixed(2)} km` 
-                  : `${Math.round(distance)} m`
-              ) : '测距中...'}
+      <div style={styles.bottomBar}>
+        <div>
+          <div style={{ fontSize: '11px', color: '#8c7a61', marginBottom: '4px', fontWeight: 'bold' }}>距您当前位置</div>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
+            <span style={{ fontSize: '24px', fontWeight: '900', color: '#3a342d', fontFamily: 'Impact, sans-serif' }}>
+              {distanceText.value}
             </span>
+            <span style={{ fontSize: '12px', color: '#5c4e3c', fontWeight: 'bold' }}>{distanceText.unit}</span>
           </div>
-          
-          <div style={styles.navAction}>
-            <span style={styles.navHint}>实时指引</span>
-            <div style={styles.compassCircle}>
-              {permissionGranted && heading !== null && rotation !== undefined ? (
-                <div style={{ ...styles.navArrow, transform: `rotate(${rotation}deg)` }}>↑</div>
-              ) : (
-                <div style={styles.navArrowDisabled}>-</div>
-              )}
-            </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '13px', color: '#5c4e3c', fontWeight: 'bold' }}>实时指引</span>
+          <div style={styles.compassCircle}>
+            {arrowRotation !== null ? (
+              <div 
+                style={{
+                  ...styles.navArrow,
+                  transform: `rotate(${arrowRotation}deg)`
+                }}
+              >↑</div>
+            ) : (
+              <span style={{ color: '#8c7a61' }}>-</span>
+            )}
           </div>
         </div>
       </div>
@@ -69,78 +75,73 @@ export default function NodeDetail() {
 }
 
 const styles = {
-  pageBackground: {
+  screenWrapper: {
     position: 'fixed',
     top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: '#e6ded3', 
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000,
-    backgroundImage: 'radial-gradient(circle, #f4ede4 0%, #e6ded3 100%)',
+    flexDirection: 'column',
+    backgroundColor: '#f4f0ea',
+    overflow: 'hidden',
   },
   backBtn: {
     position: 'absolute',
     top: '30px',
     left: '20px',
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    backgroundColor: 'rgba(255,255,255,0.7)',
     border: 'none',
     padding: '8px 16px',
     borderRadius: '20px',
     fontSize: '16px',
     fontWeight: 'bold',
     color: '#3e3a35',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
     cursor: 'pointer',
     zIndex: 10,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px'
   },
-  screenWrapper: {
-    position: 'relative',
-    width: '100vw',
-    height: '100vh',
+  mainContent: {
+    flex: 1,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '70px 20px 20px 20px',
     overflow: 'hidden',
   },
   imageWrapper: {
     position: 'relative',
-    width: '85vw',
-    maxWidth: '380px',
-    aspectRatio: '0.36 / 0.62', // 完美的羊皮纸比例
+    width: '100%',
+    maxWidth: '400px',
+    maxHeight: '100%',
+    aspectRatio: '0.45 / 0.7',
     overflow: 'hidden',
-    borderRadius: '12px',
-    boxShadow: '0 12px 30px rgba(0,0,0,0.2)',
-    backgroundColor: '#e6ded3',
   },
   signboardImg: {
     position: 'absolute',
-    width: '280%',     // 放大图片以去除木框
-    height: '160%',
-    top: '-32%',       // 精准定位到羊皮纸区域
-    left: '-90%',
+    width: '330%',
+    height: '180%',
+    top: '-40%',
+    left: '-115%',
     display: 'block',
-    filter: 'contrast(1.05) brightness(0.95)',
   },
   parchmentArea: {
     position: 'absolute',
-    top: '8%',         // 相对于羊皮纸的顶部留白
-    bottom: '38%',     // 彻底避开底部的线稿图，不再重叠
-    left: '12%',       // 左右留出安全边距
-    right: '12%',
+    top: '8%',
+    bottom: '32%',
+    left: '8%',
+    right: '8%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     textAlign: 'center',
   },
   title: {
-    fontSize: 'clamp(20px, 3vh, 28px)', 
+    fontSize: 'clamp(20px, 3vh, 28px)',
     fontWeight: '900',
-    color: '#2c2825', 
+    color: '#2c2825',
     margin: '0 0 8px 0',
-    fontFamily: '"STKaiti", "KaiTi", serif', 
+    fontFamily: '"STKaiti", "KaiTi", serif',
     letterSpacing: '2px',
-    textShadow: '0 1px 1px rgba(255,255,255,0.5)',
   },
   divider: {
     width: '70%',
@@ -155,10 +156,10 @@ const styles = {
     overflowY: 'auto',
     width: '100%',
     padding: '0 2px',
-    scrollbarWidth: 'none', 
+    scrollbarWidth: 'none',
   },
   description: {
-    fontSize: 'clamp(14px, 2vh, 18px)', // 稍微放大一点描述文字
+    fontSize: 'clamp(14px, 2.2vh, 18px)',
     color: '#3a342d',
     lineHeight: '1.8',
     textAlign: 'justify',
@@ -166,35 +167,16 @@ const styles = {
     fontWeight: '600',
     marginBottom: '12px',
   },
-  bottomNavContainer: {
-    position: 'absolute',
-    bottom: '24px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '90%',
-    maxWidth: '400px',
-    zIndex: 100,
-  },
-  distanceCard: {
-    backgroundColor: 'rgba(230, 222, 211, 0.85)',
-    backdropFilter: 'blur(8px)',
-    border: '1px solid rgba(140, 122, 97, 0.4)',
-    borderRadius: '16px',
-    padding: '12px 20px',
+  bottomBar: {
+    width: '100%',
+    backgroundColor: '#eadecf',
+    padding: '16px 24px',
+    paddingBottom: 'max(16px, env(safe-area-inset-bottom))',
+    borderTop: '1px solid rgba(140, 110, 90, 0.2)',
+    boxShadow: '0 -4px 15px rgba(0,0,0,0.06)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-  },
-  distInfo: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  distLabel: {
-    fontSize: '12px',
-    color: '#8c7a61',
-    fontWeight: 'bold',
   },
   distValue: {
     fontSize: '20px',
