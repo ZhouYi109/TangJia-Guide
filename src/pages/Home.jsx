@@ -73,7 +73,6 @@ export default function Home() {
             transformOrigin: 'bottom center'
           }}></div>
         )}
-        <div style={styles.userMarkerLabel}>您在这里</div>
       </div>
     );
   };
@@ -357,19 +356,6 @@ const styles = {
     borderRight: '4px solid transparent',
     borderBottom: '14px solid rgba(139, 0, 0, 0.8)',
     transformOrigin: 'bottom center',
-    zIndex: 3,
-  },
-  userMarkerLabel: {
-    marginTop: '12px',
-    backgroundColor: 'rgba(240,230,215,0.9)',
-    color: '#8B0000',
-    border: '1px solid rgba(140,110,90,0.5)',
-    fontSize: '10px',
-    padding: '2px 6px',
-    borderRadius: '4px',
-    fontWeight: 'bold',
-    whiteSpace: 'nowrap',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
     zIndex: 3,
   },
   mapTextContent: {
