@@ -86,7 +86,7 @@ export default function Collection() {
 
         {/* 预览区 */}
         <h3 style={styles.sectionTitle}>文创卡预览</h3>
-        <div ref={previewRef} style={styles.cardPreview}>
+        <div ref={previewRef} style={styles.cardPreview} className="town-card">
           <div style={styles.cardHeader}>
             <h4 style={styles.cardTitle}>唐家古镇视觉记忆</h4>
           </div>
@@ -238,13 +238,12 @@ const styles = {
   },
   cardPreview: {
     width: '100%',
-    backgroundColor: '#fff',
     borderRadius: '8px',
     padding: '24px',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
     marginBottom: '24px',
-    border: '1px solid var(--color-border)',
     backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23d5cfc4\' fill-opacity=\'0.2\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
+    boxSizing: 'border-box',
   },
   cardHeader: {
     borderBottom: '2px solid var(--color-primary-cool)',

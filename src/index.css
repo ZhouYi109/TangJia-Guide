@@ -21,6 +21,17 @@
   /* 功能点缀色 (Accent): 宝石蓝 / 孔雀绿 */
   --color-accent-blue: #1A5B7F;
   --color-accent-green: #1E625A;
+
+  /* ==================
+     古镇风格边框系统
+     ================== */
+  /* 蚝壳灰：源自蚝壳墙的温润暖灰，作为卡片边框主色 */
+  --town-border-color: rgba(138, 118, 92, 0.35);
+  --town-border-color-strong: rgba(138, 118, 92, 0.6);
+  /* 卡片底色：糯米白带微弱暖调 */
+  --town-card-bg: rgba(252, 249, 244, 0.92);
+  /* 角花装饰尺寸 */
+  --town-corner-size: 10px;
   
   /* ==================
      其他变量 
@@ -115,5 +126,63 @@ a {
 
 /* Leaflet 自定义 Marker 样式 */
 
+/* ==================
+   古镇风格卡片通用类
+   ================== */
 
+/* 基础古镇卡片：温润砂岩边框 + 糯米底色 */
+.town-card {
+  background-color: var(--town-card-bg);
+  border: 1px solid var(--town-border-color);
+  border-radius: var(--border-radius-md);
+  position: relative;
+  box-sizing: border-box;
+}
 
+/* 角花装饰：用双层 outline 模拟传统榫卯边框角花 */
+.town-card::before,
+.town-card::after {
+  content: '';
+  position: absolute;
+  width: var(--town-corner-size);
+  height: var(--town-corner-size);
+  border-color: var(--town-border-color-strong);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 左上角花 */
+.town-card::before {
+  top: 4px;
+  left: 4px;
+  border-width: 1.5px 0 0 1.5px;
+  border-radius: 2px 0 0 0;
+}
+
+/* 右下角花 */
+.town-card::after {
+  bottom: 4px;
+  right: 4px;
+  border-width: 0 1.5px 1.5px 0;
+  border-radius: 0 0 2px 0;
+}
+
+/* 路线卡片：左侧青砖蓝竖线强调 */
+.town-card-route {
+  border-left: 3px solid var(--town-border-color-strong);
+}
+
+/* 悬停交互 */
+.town-card-interactive {
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+.town-card-interactive:active {
+  transform: scale(0.985);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}

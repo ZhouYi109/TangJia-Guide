@@ -6,7 +6,7 @@ export default function BottomNav() {
   const isHome = location.pathname === '/';
 
   return (
-    <div style={styles.container} className="glass-panel">
+    <div style={styles.container} className="town-card">
       {!isHome ? (
         <button 
           style={styles.iconBtn} 
@@ -49,19 +49,19 @@ export default function BottomNav() {
 const styles = {
   container: {
     position: 'fixed',
-    bottom: '24px', // 固定在底部
+    bottom: '24px',
     left: '50%',
     transform: 'translateX(-50%)',
     width: 'calc(100% - 48px)',
     maxWidth: '432px',
-    height: '64px',
+    height: '56px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0 24px',
+    padding: '0 20px',
     zIndex: 999,
-    borderRadius: '32px', // 胶囊形状
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '28px',
+    boxShadow: '0 4px 20px rgba(80, 60, 40, 0.12)',
   },
   title: {
     fontSize: '16px',

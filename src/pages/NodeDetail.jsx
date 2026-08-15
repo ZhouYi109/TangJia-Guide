@@ -49,7 +49,7 @@ export default function NodeDetail() {
             ))}
           </div>
           
-          <div style={styles.card}>
+          <div style={styles.card} className="town-card">
             <h3 style={styles.cardTitle}>景点介绍</h3>
             <p style={styles.description}>{data.description}</p>
             {data.feature && <p style={styles.description}>{data.feature}</p>}
@@ -176,11 +176,9 @@ const styles = {
     border: '1px solid rgba(140, 110, 90, 0.2)',
   },
   card: {
-    backgroundColor: '#fff',
     borderRadius: '16px',
     padding: '24px',
-    boxShadow: '0 8px 30px rgba(0,0,0,0.04)',
-    border: '1px solid rgba(140, 110, 90, 0.1)',
+    boxShadow: '0 4px 16px rgba(80,60,40,0.06)',
   },
   cardTitle: {
     fontSize: '18px',

@@ -99,7 +99,7 @@ export default function Home() {
         </section>
 
         {/* GPS 与 罗盘 工具栏 */}
-        <div style={styles.debugPanel} className="glass-panel">
+        <div style={styles.debugPanel} className="town-card">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <span style={{ fontSize: '12px' }}>
               📍 定位：{position ? (isMocking ? '漫游模式' : '真实定位') : '获取中...'}
@@ -130,7 +130,7 @@ export default function Home() {
 
         {/* 动态排序的分类列表 */}
         <section style={styles.routes}>
-          <div style={styles.tabsContainer}>
+          <div style={styles.tabsContainer} className="town-card">
             <button 
               style={activeCategory === 'attraction' ? styles.tabActive : styles.tabInactive}
               onClick={() => setActiveCategory('attraction')}
@@ -152,7 +152,7 @@ export default function Home() {
           {/* 同步导视牌：推荐游览线路 */}
           <div style={styles.boardSection}>
             <h3 style={styles.sectionTitle}>推荐线路</h3>
-            <div style={styles.routeCard}>
+            <div style={styles.routeCard} className="town-card town-card-route">
               <div style={styles.routeHeader}>
                 <span style={styles.routeName}>线路A 自然景观线</span>
                 <span style={styles.routeTime}>20 min</span>
@@ -160,7 +160,7 @@ export default function Home() {
               <div style={styles.routePath}>共乐园 ➔ 唐家三庙 ➔ 梁氏大宗祠</div>
             </div>
             
-            <div style={styles.routeCard}>
+            <div style={styles.routeCard} className="town-card town-card-route">
               <div style={styles.routeHeader}>
                 <span style={styles.routeName}>线路B 历史文化线</span>
                 <span style={styles.routeTime}>45 min</span>
@@ -168,7 +168,7 @@ export default function Home() {
               <div style={styles.routePath}>望慈山房 ➔ 唐绍仪故居 ➔ 珠海留学文化馆 ➔ 唐涤生大剧院 ➔ 唐家湾乡思馆 ➔ 瑞芝祠</div>
             </div>
 
-            <div style={styles.routeCard}>
+            <div style={styles.routeCard} className="town-card town-card-route">
               <div style={styles.routeHeader}>
                 <span style={styles.routeName}>线路C 休闲漫游线</span>
                 <span style={styles.routeTime}>30 min</span>
@@ -181,15 +181,15 @@ export default function Home() {
           <div style={styles.boardSection}>
             <h3 style={styles.sectionTitle}>智能体验</h3>
             <div style={styles.experienceGrid}>
-              <div style={styles.expItem}>
+              <div style={styles.expItem} className="town-card">
                 <h4 style={{margin: '0 0 4px 0'}}>📱 扫码导览</h4>
                 <p style={{margin: 0, fontSize: '11px', color: 'var(--color-text-secondary)'}}>开启语音导览与智能路线规划</p>
               </div>
-              <div style={styles.expItem}>
+              <div style={styles.expItem} className="town-card">
                 <h4 style={{margin: '0 0 4px 0'}}>📍 节点打卡</h4>
                 <p style={{margin: 0, fontSize: '11px', color: 'var(--color-text-secondary)'}}>探访特色景点，打卡记录精彩瞬间</p>
               </div>
-              <div style={styles.expItem}>
+              <div style={styles.expItem} className="town-card">
                 <h4 style={{margin: '0 0 4px 0'}}>💠 纹样收集</h4>
                 <p style={{margin: 0, fontSize: '11px', color: 'var(--color-text-secondary)'}}>发现古镇纹样，收集特色图鉴</p>
               </div>
@@ -202,7 +202,7 @@ export default function Home() {
               <div 
                 key={node.id} 
                 style={styles.nodeCard} 
-                className="glass-panel"
+                className="town-card town-card-interactive"
                 onClick={() => navigate(`/node/${node.id}`)}
               >
                 <div style={styles.nodeInfo}>
@@ -378,8 +378,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderRadius: '12px',
-    border: '1px solid rgba(255,255,255,0.6)',
   },
   btnGroup: {
     display: 'flex',
@@ -411,34 +409,34 @@ const styles = {
   },
   tabsContainer: {
     display: 'flex',
-    backgroundColor: 'rgba(255,255,255,0.6)',
-    borderRadius: '12px',
     padding: '4px',
     marginBottom: '16px',
-    border: '1px solid rgba(255,255,255,0.8)',
+    gap: '2px',
   },
   tabActive: {
     flex: 1,
-    padding: '8px',
-    border: 'none',
-    backgroundColor: '#fff',
-    color: 'var(--color-primary-cool)',
-    fontSize: '14px',
+    padding: '7px 4px',
+    border: '1px solid var(--town-border-color-strong)',
+    backgroundColor: 'rgba(252, 249, 244, 1)',
+    color: 'var(--color-accent-blue)',
+    fontSize: '13px',
     fontWeight: 'bold',
     borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+    boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.04)',
     cursor: 'pointer',
     transition: 'all 0.2s',
+    whiteSpace: 'nowrap',
   },
   tabInactive: {
     flex: 1,
-    padding: '8px',
-    border: 'none',
+    padding: '7px 4px',
+    border: '1px solid transparent',
     backgroundColor: 'transparent',
     color: 'var(--color-text-secondary)',
-    fontSize: '14px',
+    fontSize: '13px',
     cursor: 'pointer',
     transition: 'all 0.2s',
+    whiteSpace: 'nowrap',
   },
   nodeList: {
     display: 'flex',
@@ -448,11 +446,8 @@ const styles = {
   nodeCard: {
     display: 'flex',
     alignItems: 'center',
-    padding: '16px',
-    borderRadius: '12px',
-    border: '1px solid rgba(255,255,255,0.6)',
-    cursor: 'pointer',
-    transition: 'transform 0.2s',
+    padding: '14px 16px',
+    width: '100%',
   },
   nodeInfo: {
     flex: 1,
@@ -549,12 +544,8 @@ const styles = {
     marginBottom: '20px',
   },
   routeCard: {
-    backgroundColor: 'rgba(255,255,255,0.6)',
-    padding: '12px',
-    borderRadius: '8px',
+    padding: '12px 14px',
     marginBottom: '10px',
-    borderLeft: '4px solid var(--color-accent-blue)',
-    border: '1px solid rgba(255,255,255,0.8)'
   },
   routeHeader: {
     display: 'flex',
@@ -578,10 +569,7 @@ const styles = {
     gap: '12px'
   },
   expItem: {
-    backgroundColor: 'rgba(255,255,255,0.8)',
-    padding: '12px',
-    borderRadius: '8px',
-    border: '1px solid var(--color-border)'
+    padding: '12px 14px',
   },
   mockHintOverlay: {
     position: 'absolute',
